@@ -6,10 +6,12 @@
   const next=Math.max(0,Math.min(2,lane+d));
   if(next===lane)return;
   const playerY=H*.76, oldLane=lane;
-  // Only deliberate lane changes around a nearby vehicle can create a cut.
+  // Record deliberate evasive lane changes while approaching traffic.
+  // dy > 0 means the traffic car is still ahead of the player.
   for(const c of cars){
     const dy=playerY-c.y;
-    if(dy>-90&&dy<185){
+    if(!c.awarded && dy>=12 && dy<=125 &&
+       (oldLane===c.lane || Math.abs(next-c.lane)===1)){
       c.moves.push({from:oldLane,to:next,time:t,dy});
     }
   }
@@ -20,18 +22,21 @@
   // Ordinary overtakes count quietly. No green popup unless the player
   // deliberately cuts around traffic with genuinely tight clearance.
   let pts=50,flash=false;
-  const recent=c.moves.filter(m=>t-m.time<2.3 && m.dy>-75 && m.dy<165);
-  const clearance=c.minClearance;
-  const close=Number.isFinite(clearance)&&clearance>=0&&clearance<Math.max(8,(roadR-roadL)/3*.14);
-  if(close && recent.length){
+  // Skill bonuses are earned by changing lanes just before passing a car.
+  // Adjacent-lane passes without an actual timed maneuver stay silent.
+  const recent=c.moves.filter(m=>t-m.time<2.1 && m.dy>=12 && m.dy<=125);
+  const tight=recent.some(m=>m.dy<=75 &&
+      (m.from===c.lane || Math.abs(m.to-c.lane)===1));
+  if(tight){
     pts=200;flash=true;
-    // A true three-lane cut must cross both lane boundaries rapidly,
-    // while maneuvering around this same car.
-    const first=recent[0],lastMove=recent[recent.length-1];
-    if(recent.length>=2 && Math.abs(lastMove.to-first.from)===2 && lastMove.time-first.time<=1.25){pts=350}
+    // A fast two-step move across the entire three-lane road earns purple.
+    for(let i=0;i<recent.length;i++)for(let j=i+1;j<recent.length;j++){
+      if(recent[j].time-recent[i].time<=1.4 &&
+         Math.abs(recent[j].to-recent[i].from)===2){pts=350}
+    }
   }
   score+=pts;
-  if(flash)popups.push({x:Math.min(W-85,px+38),y:H*.76-46,life:.75,pts,color:pts===350?'#4c00b0':'#008000'});
+  if(flash)popups.push({x:Math.min(W-50,px+24),y:H*.76-38,life:1.05,pts,color:pts===350?'#4c00b0':'#008000'});
   $('score').textContent=fmt(score);
   if(score>best){best=score;$('best').textContent=fmt(best);try{localStorage.setItem('mhighway-best',String(Math.floor(best)))}catch(e){}}
 }
@@ -82,9 +87,9 @@ function update(dt){
 function drawPopups(){
   ctx.save();ctx.textAlign='left';
   for(const p of popups){
-    ctx.globalAlpha=Math.min(1,p.life*2.3);
-    const x=Math.max(8,Math.min(W-110,p.x));
-    ctx.font='bold 13px monospace';
+    ctx.globalAlpha=Math.min(1,p.life*2.1);
+    const x=Math.max(8,Math.min(W-52,p.x));
+    ctx.font='bold 12px monospace';
     ctx.fillStyle=p.color;ctx.fillText('+'+p.pts,x,p.y);
 
   }
