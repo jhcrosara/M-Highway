@@ -1,9 +1,489 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#050b13"><title>M Highway V37</title><style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03070d;color:#f5f8fc;font-family:Arial,Helvetica,sans-serif;touch-action:none}#app{height:100dvh;display:flex;flex-direction:column}.bar{height:58px;flex:none;background:linear-gradient(#0b1420,#060a10);border-bottom:1px solid #26405a;display:flex;align-items:center;gap:11px;padding:0 13px}.m{display:flex;gap:3px;transform:skew(-18deg);margin-right:3px}.m i{display:block;width:8px;height:25px;background:#6ac4ed}.m i:nth-child(2){background:#1471b5}.m i:nth-child(3){background:#ec3154}.brand{font-size:21px;white-space:nowrap}.brand b{font-weight:900}.ver{margin-left:auto;font-size:10px;letter-spacing:1px;color:#91abc4;white-space:nowrap}button{color:white;cursor:pointer;font:inherit}.menu{background:#101d2a;border:1px solid #476987;border-radius:8px;padding:10px;font-size:12px}.scene{position:relative;flex:1;min-height:0;overflow:hidden}canvas{width:100%;height:100%;display:block}.hud{position:absolute;top:15px;left:16px;pointer-events:none;text-shadow:0 2px 9px #000}.score{font-size:clamp(25px,6vw,38px);font-weight:900;letter-spacing:3px;font-variant-numeric:tabular-nums}.best{margin-top:5px;font-size:13px;color:#b9c7d5;letter-spacing:1px}.best span{color:#eacb80}.gauge{position:absolute;right:13px;top:13px;width:116px;height:116px;border:2px solid #87b1d0;border-radius:50%;background:#050c15e8;box-shadow:0 0 0 5px #030b13a8,inset 0 0 24px #122a42;display:flex;align-items:center;justify-content:center;flex-direction:column}.gauge:before{content:"";position:absolute;inset:8px;border-radius:50%;border:9px solid #123a59;border-top-color:#3db4f0;border-left-color:#2080c3;transform:rotate(-28deg)}.gauge>*{position:relative}.gauge small{font-size:11px;letter-spacing:2px;color:#a2c5dc}.gauge strong{font-size:37px;line-height:1.1;font-variant-numeric:tabular-nums}.gauge em{font-style:normal;font-size:12px}.pursuit{position:absolute;right:13px;top:141px;border:1px solid #315773;background:#06101bdb;padding:7px 11px;border-radius:30px;font-size:11px;letter-spacing:1px}.pursuit.hot{color:#ff6969;border-color:#e64e5e}.controls{position:absolute;bottom:24px;left:0;right:0;display:flex;justify-content:space-between;padding:0 18px;pointer-events:none}.steer{pointer-events:auto;border:1.5px solid #6797bb;background:#07121de3;border-radius:50%;width:73px;height:73px;font-size:43px;font-weight:300;box-shadow:0 5px 25px #0008}.steer:active{background:#1e537b}.overlay{position:absolute;inset:0;background:#02070bc9;display:flex;align-items:center;justify-content:center;padding:22px;z-index:5}.panel{width:min(360px,100%);border:1px solid #3b607e;background:linear-gradient(145deg,#132434,#070d15);border-radius:15px;padding:24px;text-align:center;box-shadow:0 22px 80px #000b}.panel h2{font-size:27px;margin:5px 0 12px}.panel p{color:#a9bac9;line-height:1.5;font-size:14px}.action{background:#1378bb;border:0;border-radius:9px;padding:13px 22px;font-weight:700;width:100%;margin-top:10px}.secondary{background:#172635;border:1px solid #395772}.hidden{display:none}.small{font-size:12px!important}.hint{position:absolute;bottom:105px;left:0;right:0;text-align:center;color:#9eb7c9;font-size:11px;pointer-events:none;opacity:.75}@media(max-width:370px){.brand{font-size:18px}.ver{font-size:9px}.bar{gap:7px;padding:0 9px}}
-</style></head><body><div id="app"><header class="bar"><div class="m"><i></i><i></i><i></i></div><div class="brand"><b>M</b> Highway</div><span class="ver">V37 · NIGHT DRIVE</span><button class="menu" id="menu">MENU ▾</button></header><main class="scene" id="scene"><canvas id="game"></canvas><div class="hud"><div class="score" id="score">000000</div><div class="best"><span>🏆</span> <span id="best">000000</span></div></div><div class="gauge"><small>SPEED</small><strong id="speed">000</strong><em>MPH</em></div><div class="pursuit" id="pursuit">PURSUIT: CLEAR</div><div class="hint" id="hint">AVOID TRAFFIC · USE ◀ ▶ OR ARROW KEYS</div><div class="controls"><button class="steer" id="left" aria-label="Steer left">‹</button><button class="steer" id="right" aria-label="Steer right">›</button></div><div class="overlay" id="overlay"><div class="panel"><div class="m" style="justify-content:center;margin:0 auto 14px;width:max-content"><i></i><i></i><i></i></div><h2 id="title">M Highway</h2><p id="message">Brooklyn Grey X3 M40i. Night highway. Dodge traffic, build your score, and escape the pursuit.</p><button class="action" id="start">START DRIVE</button><button class="action secondary hidden" id="resume">RESUME</button><p class="small">Tap the arrows to change lanes · Keyboard ← →</p></div></div></main></div><script>
-(()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d',{alpha:false});let W=0,H=0,dpr=1,last=0,run=false,started=false,dead=false,score=0,best=0,speed=0,world=0,spawn=0,carX=1,desired=1,traffic=[],particles=[],shake=0,near=0,pursuit=0,frame=0;try{best=+(localStorage.getItem('mhighway_v37_best')||0)}catch(e){}$('best').textContent=String(best).padStart(6,'0');const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rand=(a,b)=>a+Math.random()*(b-a),colors=['#b9c0c8','#29333e','#9e2837','#1a527a','#e7e6e2','#434a50','#657c83','#a39c88'];function resize(){let r=canvas.getBoundingClientRect();W=r.width;H=r.height;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();function poly(pts,color){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill()}function line(x,y,X,Y,color,width=1){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,Y);ctx.stroke()}function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(x,y,w,h)}function round(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}function horizon(){return H*.35}function project(x,z){let depth=clamp(z,0,1),p=Math.pow(depth,1.45),hy=horizon(),y=hy+(H-hy)*p;let half=W*(.09+1.04*p);return{x:W/2+(x-1)*half/1.53,y,scale:.12+1.65*p,half,p}}function roadEdges(z){let p=project(1,z);return{left:W/2-p.half,right:W/2+p.half,y:p.y,p:p.p}}function drawBackground(){let sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#040b17');sky.addColorStop(.36,'#132a42');sky.addColorStop(.65,'#101d26');sky.addColorStop(1,'#071016');rect(0,0,W,H,sky);let hy=horizon();for(let i=0;i<60;i++){let x=((i*139.37)%1000)/1000*W,y=((i*73.13)%400)/400*hy*.8;rect(x,y,i%8===0?2:1,1,'#7791a1')}let glow=ctx.createRadialGradient(W*.74,hy*.72,3,W*.74,hy*.72,W*.5);glow.addColorStop(0,'#203d5480');glow.addColorStop(1,'#12253a00');rect(0,0,W,hy,glow);for(let i=0;i<33;i++){let x=i*W/32,hh=15+(Math.sin(i*12.7)+1)*19+(i%5)*7;rect(x,hy-hh,W/31+2,hh,'#081521');if(i%3===0){rect(x+5,hy-hh+9,3,2,'#446175')}}rect(0,hy,W,H-hy,'#0a1b1b')}
-function drawRoad(){let hy=horizon();let top=roadEdges(0),bot=roadEdges(1);poly([[top.left,hy],[top.right,hy],[bot.right,H],[bot.left,H]],'#222a32');let g=ctx.createLinearGradient(0,hy,0,H);g.addColorStop(0,'#26313a');g.addColorStop(.7,'#252a32');g.addColorStop(1,'#1b222a');poly([[top.left,hy],[top.right,hy],[bot.right,H],[bot.left,H]],g);for(let side of [-1,1]){let a=project(1,0),b=project(1,1);poly([[W/2+side*a.half,hy],[W/2+side*(a.half+2),hy],[W/2+side*(b.half+13),H],[W/2+side*b.half,H]],'#a3a9a8')}let travel=world%1;for(let i=0;i<28;i++){let z=(i+travel)/28;if(z>=1)continue;let z2=Math.min(1,z+.012+z*.018);let a=project(1,z),b=project(1,z2);let w=2+7*a.p;for(let boundary of [-1/3,1/3]){let x1=W/2+boundary*a.half,x2=W/2+boundary*b.half;poly([[x1-w/2,a.y],[x1+w/2,a.y],[x2+w/2,b.y],[x2-w/2,b.y]],'#d8dfe0')}}for(let i=0;i<19;i++){let z=((i/19+world*.065)%1);let a=project(1,z);let size=2+5*a.p;for(let side of [-1,1]){let x=W/2+side*(a.half+16+24*a.p),y=a.y;line(x,y,x,y-14*a.scale,'#304b43',Math.max(1,2*a.scale));ctx.fillStyle='#24594e';ctx.beginPath();ctx.ellipse(x,y-14*a.scale,6*a.scale,3*a.scale,0,0,Math.PI*2);ctx.fill();if(i%4===0){let lx=W/2+side*(a.half+40+55*a.p);line(lx,y,lx,y-54*a.scale,'#5d6668',Math.max(1,a.scale*2));ctx.fillStyle='#ffe5a2';ctx.beginPath();ctx.arc(lx-side*5*a.scale,y-54*a.scale,2.7*a.scale,0,7);ctx.fill()}}}let sheen=ctx.createLinearGradient(W*.4,hy,W*.55,H);sheen.addColorStop(0,'#7ca0b007');sheen.addColorStop(.5,'#93bad50d');sheen.addColorStop(1,'#1e253000');poly([[W*.47,hy],[W*.53,hy],[W*.78,H],[W*.22,H]],sheen)}
-function drawCar(x,z,color,type='sedan',player=false){let p=project(x,z),s=player?Math.min(W*.30,155):Math.min(W*.29,87)*(.23+p.p*1.15);let w=player?s:s*(type==='truck'?1.05:1),h=w*(type==='truck'?1.35:type==='suv'?1.02:.83),cx=player?W/2+(carX-1)*Math.min(W*.25,110):p.x,cy=player?H*.84:p.y; if(!player&&z<.025)return;ctx.save();ctx.translate(cx,cy);if(player)ctx.rotate((desired-carX)*-.035);ctx.fillStyle='#0009';ctx.beginPath();ctx.ellipse(0,1,w*.6,h*.13,0,0,7);ctx.fill();let top=-h,body=color;poly([[-w*.44,-h*.80],[-w*.38,-h*.98],[w*.38,-h*.98],[w*.44,-h*.80],[w*.49,-h*.18],[w*.45,0],[-w*.45,0],[-w*.49,-h*.18]],body);poly([[-w*.36,-h*.84],[-w*.30,-h*.96],[w*.30,-h*.96],[w*.36,-h*.84]],'#6f7980');poly([[-w*.37,-h*.77],[w*.37,-h*.77],[w*.35,-h*.44],[-w*.35,-h*.44]],'#0a1c2a');poly([[-w*.32,-h*.73],[w*.32,-h*.73],[w*.29,-h*.51],[-w*.29,-h*.51]],'#1c3544');line(-w*.32,-h*.73,w*.32,-h*.73,'#688294',Math.max(1,w*.013));rect(-w*.43,-h*.38,w*.86,h*.16,player?'#56616a':'#2d343b');poly([[-w*.44,-h*.26],[-w*.07,-h*.26],[-w*.09,-h*.18],[-w*.45,-h*.17]],'#ff2937');poly([[w*.44,-h*.26],[w*.07,-h*.26],[w*.09,-h*.18],[w*.45,-h*.17]],'#ff2937');rect(-w*.38,-h*.245,w*.23,Math.max(1,w*.024),'#ff9293');rect(w*.15,-h*.245,w*.23,Math.max(1,w*.024),'#ff9293');round(-w*.17,-h*.28,w*.34,h*.105,2,'#0a111b');if(w>45){ctx.fillStyle='#f3f6f9';ctx.font=`bold ${Math.max(5,w*.075)}px Arial`;ctx.textAlign='center';ctx.fillText(player?'M':type==='truck'?'TRUCK':'',0,-h*.205)}rect(-w*.47,-h*.11,w*.94,h*.1,'#101820');if(player){round(-w*.34,-h*.095,w*.22,h*.045,2,'#9ea5a8');round(w*.12,-h*.095,w*.22,h*.045,2,'#9ea5a8');ctx.fillStyle='#c4d0d7';ctx.beginPath();ctx.arc(0,-h*.36,w*.047,0,7);ctx.fill();ctx.fillStyle='#2579bc';ctx.beginPath();ctx.arc(0,-h*.36,w*.031,0,7);ctx.fill();ctx.fillStyle='#e4ebf2';ctx.font=`bold ${w*.1}px Arial`;ctx.fillText('X3',-w*.29,-h*.34);ctx.fillText('M40i',w*.29,-h*.34)}ctx.restore()}
-function update(dt){if(!run)return;speed=Math.min(132,speed+dt*29);world+=dt*(.55+speed*.035);carX+=(desired-carX)*Math.min(1,dt*8);score+=dt*speed*.68;spawn-=dt;let interval=clamp(1.45-speed*.006,.55,1.15);if(spawn<=0){spawn=interval*rand(.75,1.4);let lane=Math.floor(rand(0,3)),x=lane;let blocked=traffic.some(t=>t.lane===lane&&t.z<.23);if(!blocked)traffic.push({lane,x,z:0,type:Math.random()<.12?'truck':Math.random()<.48?'suv':'sedan',color:colors[Math.floor(rand(0,colors.length))],v:rand(.23,.39),passed:false})}for(let t of traffic){t.z+=dt*(.09+speed*.006-t.v*.18);if(!t.passed&&t.z>.91){t.passed=true;if(Math.abs(carX-t.x)>.59){score+=100;near=1}}if(t.z>.81&&t.z<1.04&&Math.abs(carX-t.x)<.52){crash();break}}traffic=traffic.filter(t=>t.z<1.3);near=Math.max(0,near-dt);if(score>best){best=Math.floor(score);$('best').textContent=String(best).padStart(6,'0');try{localStorage.setItem('mhighway_v37_best',best)}catch(e){}}$('score').textContent=String(Math.floor(score)).padStart(6,'0');$('speed').textContent=String(Math.round(speed)).padStart(3,'0')}
-function render(){drawBackground();drawRoad();traffic.sort((a,b)=>a.z-b.z);for(let t of traffic)drawCar(t.x,t.z,t.color,t.type);drawCar(carX,1,'#777f84','suv',true);if(near>0){ctx.textAlign='center';ctx.fillStyle=`rgba(121,203,255,${near})`;ctx.font='bold 16px Arial';ctx.fillText('NEAR MISS +100',W/2,H*.57)}if(dead){rect(0,0,W,H,'#a3131918')}}function loop(t){let dt=clamp((t-last)/1000||0,0,.05);last=t;update(dt);render();requestAnimationFrame(loop)}requestAnimationFrame(loop);function show(title,message,button){run=false;$('overlay').classList.remove('hidden');$('title').textContent=title;$('message').textContent=message;$('start').textContent=button;$('resume').classList.toggle('hidden',!started||dead)}function start(){score=0;speed=38;world=0;spawn=.8;carX=1;desired=1;traffic=[];dead=false;started=true;run=true;$('overlay').classList.add('hidden');$('hint').style.display='none'}function crash(){if(dead)return;dead=true;run=false;show('CRASHED',`Score ${Math.floor(score).toLocaleString()} · Best ${best.toLocaleString()}`,'TRY AGAIN')}function steer(n){if(!run)return;desired=clamp(desired+n,0,2)}$('start').onclick=start;$('resume').onclick=()=>{run=true;$('overlay').classList.add('hidden')};$('menu').onclick=()=>show('PAUSED','Take a break or restart the highway drive.','NEW GAME');$('left').addEventListener('pointerdown',e=>{e.preventDefault();steer(-1)});$('right').addEventListener('pointerdown',e=>{e.preventDefault();steer(1)});addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a'){e.preventDefault();if(!e.repeat)steer(-1)}if(e.key==='ArrowRight'||e.key.toLowerCase()==='d'){e.preventDefault();if(!e.repeat)steer(1)}if(e.key===' '){e.preventDefault();if(!started||dead)start()}});let touchStart=null;canvas.addEventListener('touchstart',e=>{touchStart=e.touches[0].clientX},{passive:true});canvas.addEventListener('touchend',e=>{if(touchStart!==null){let d=e.changedTouches[0].clientX-touchStart;if(Math.abs(d)>28)steer(d>0?1:-1);touchStart=null}},{passive:true});})();
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>M Highway</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#08090b;color:#fff;font-family:Arial,Helvetica,sans-serif;touch-action:none}button{font:inherit;color:inherit;cursor:pointer}.app{height:100vh;height:100dvh;display:flex;flex-direction:column}.topbar{height:58px;min-height:58px;display:flex;align-items:center;gap:14px;padding:0 22px;background:linear-gradient(#18191d,#08090b);border-bottom:2px solid #54565a;position:relative;z-index:3}.topbar:after{content:"";position:absolute;bottom:-2px;left:76px;width:210px;height:3px;background:#d92735}.brand{display:flex;align-items:center;gap:10px;font-size:22px;letter-spacing:.2px;font-weight:500}.mstripes{display:inline-flex;gap:2px;transform:skew(-22deg);margin-right:3px}.mstripes i{width:8px;height:21px;background:#6cc9ee}.mstripes i:nth-child(2){background:#154ca5}.mstripes i:nth-child(3){background:#ef3447}.home,.menuBtn{height:42px;min-width:46px;border:0;background:transparent;font-size:24px}.menuBtn{margin-left:auto;font-size:13px;letter-spacing:1.3px;color:#c9ccd2}.home svg{width:23px;height:23px;fill:white}.gameArea{flex:1;min-height:0;position:relative;overflow:hidden;background:#07568a}canvas{width:100%;height:100%;display:block;image-rendering:pixelated}.hud{position:absolute;left:12px;top:12px;z-index:1;background:#090b0df0;border:2px solid #eee;border-radius:3px;padding:10px 13px;min-width:136px;font-family:monospace;pointer-events:none;text-shadow:2px 2px #000}.hud label{display:block;font-size:12px;font-weight:bold;letter-spacing:1px}.hud strong{display:block;font-size:25px;line-height:1.16;margin-bottom:8px;color:#f04b42}.hud strong.white{color:#fff}.hud strong:last-child{margin-bottom:0}.control{position:absolute;bottom:14px;z-index:2;width:76px;height:62px;border:1px solid #ffffff70;border-radius:10px;background:#080b10a8;font-size:29px;touch-action:manipulation}.left{left:14px}.right{right:14px}.overlay{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;background:#05070bcf;padding:12px}.hidden{display:none!important}.dialog{width:min(420px,90%);padding:22px 24px;text-align:center;background:linear-gradient(150deg,#242a33,#101318);border:1px solid #777b85;box-shadow:0 15px 55px #000b}.dialog h1{margin:0 0 10px;font-size:26px;letter-spacing:1.5px}.dialog p{color:#d1d4d8;line-height:1.45;font-size:14px}.dialog button,.menuPanel button{border:1px solid #757b85;background:#313842;padding:12px 24px;min-height:45px;font-weight:bold}.dialog button.primary{background:#9c2029;border-color:#e2434b}.menuPanel{position:absolute;right:10px;top:8px;z-index:5;background:#161a21;border:1px solid #666;padding:12px;display:grid;gap:8px;min-width:160px;box-shadow:0 12px 35px #0009}.notice{font-size:11px;color:#aeb3bd;margin-top:12px}@media(max-height:460px){.topbar{height:42px;min-height:42px;padding:0 12px}.brand{font-size:17px}.mstripes i{height:16px;width:6px}.home,.menuBtn{height:36px}.hud{top:7px;left:7px;padding:6px 9px;min-width:112px}.hud label{font-size:10px}.hud strong{font-size:18px;margin-bottom:5px}.control{height:45px;width:55px;bottom:8px}.dialog{padding:13px}.dialog h1{font-size:21px}.dialog p{font-size:12px;margin:8px 0}.dialog button{min-height:37px;padding:8px 16px}}@media(max-width:560px){.topbar{padding:0 10px;gap:7px}.brand{font-size:17px}.hud{min-width:105px;padding:7px}.hud label{font-size:10px}.hud strong{font-size:19px}.control{width:54px;height:50px}}
+
+/* V29 OEM-inspired cockpit UI — visual layer only */
+.topbar{height:54px;min-height:54px;background:linear-gradient(180deg,#20242b 0%,#101318 100%);border-bottom:1px solid #39414c;padding:0 21px;box-shadow:0 5px 22px #0008}.topbar:after{left:0;bottom:-2px;width:100%;height:2px;background:linear-gradient(90deg,#72c5e8 0 3.5%,#154ca5 3.5% 7%,#e63242 7% 10.5%,transparent 10.5%)}.brand{font-size:20px;letter-spacing:.4px}.brand b{font-weight:900}.menuBtn{background:#ffffff0a;border:1px solid #ffffff20;border-radius:6px;padding:0 15px;height:34px;font-size:11px;letter-spacing:1.7px;font-weight:700}.home{height:35px;min-width:38px;border:1px solid #ffffff1d;border-radius:6px;background:#ffffff08}.home svg{width:18px;height:18px}.gameArea:after{content:"";pointer-events:none;position:absolute;inset:0;z-index:0;box-shadow:inset 0 0 70px #0004}.hud{left:17px;top:16px;min-width:0;width:min(305px,43vw);padding:12px 15px 13px;border:1px solid #9baab94a;border-left:3px solid #72c5e8;border-radius:8px;background:linear-gradient(145deg,#0c141deb,#101820dd);box-shadow:0 8px 24px #0007;text-shadow:none;backdrop-filter:blur(7px)}.hudEyebrow{font-size:9px;letter-spacing:1.7px;font-weight:800;color:#aebdca;white-space:nowrap;margin-bottom:12px}.liveDot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#72c5e8;box-shadow:0 0 8px #72c5e8;margin-right:5px}.hudDivider{color:#647587;margin:0 4px}.scoreGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.scoreCell label,.speedHead{font:700 10px Arial,sans-serif;letter-spacing:1.4px;color:#aab8c8}.hud .scoreCell strong{font-family:Arial,Helvetica,sans-serif;font-size:25px;font-weight:800;letter-spacing:1px;line-height:1.3;margin:2px 0 0;color:#f6f8fb}.hud .bestCell strong{color:#82b5e7;font-size:20px}.bestCell{border-left:1px solid #ffffff25;padding-left:12px}.rightHud{position:absolute;right:17px;top:16px;z-index:1;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:155px;pointer-events:none}.speedBox,.pursuitBox{border:1px solid #9baab94a;background:linear-gradient(140deg,#101820e9,#0b1119e3);border-radius:8px;padding:11px 13px;box-shadow:0 8px 24px #0006;backdrop-filter:blur(7px)}.speedHead{display:flex;justify-content:space-between}.speedHead span{color:#78bfe5}.speedNumber{font:bold 39px/1.2 Arial,Helvetica,sans-serif;letter-spacing:1px;margin-top:4px;font-variant-numeric:tabular-nums}.speedMeter{display:flex;gap:3px;margin-top:5px}.speedMeter i{height:3px;flex:1;background:#72c5e8}.speedMeter i:nth-child(2){background:#154ca5}.speedMeter i:nth-child(3){background:#e63242}.pursuitBox{display:flex;align-items:center;gap:8px;padding:10px 11px}.pursuitBox label{font:800 10px Arial,sans-serif;letter-spacing:1px;color:#dce7ef}.pursuitLight{width:8px;height:8px;flex:none;border-radius:50%;background:#49a8d4;box-shadow:0 0 9px #49a8d4}.pursuitBox:has(label:not(:empty)){}.bottomLabel{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:1;background:#0b111ac7;border:1px solid #ffffff24;border-radius:30px;padding:7px 14px;font-size:9px;font-weight:800;letter-spacing:1.8px;color:#9baab9;white-space:nowrap}.bottomLabel>span{color:#f0f4f9}.bottomLabel i{display:inline-block;width:4px;height:4px;border-radius:50%;background:#e63242;vertical-align:middle;margin:0 7px}.control{width:67px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;background:linear-gradient(155deg,#182330e8,#0b121ce8);border:1px solid #a6c4d54a;border-radius:12px;box-shadow:0 5px 20px #0009}.control span{font:300 37px/32px Arial,sans-serif}.control small{font:700 9px Arial,sans-serif;letter-spacing:1.5px;color:#8ea4b7}.control:active{background:#24516d}.overlay{background:#05080de0;backdrop-filter:blur(5px)}.dialog{border-radius:14px;border:1px solid #8c9cab5c;background:linear-gradient(145deg,#1e2935,#0c1118 85%);box-shadow:0 22px 70px #000c;padding:26px 28px}.dialogStripes{display:flex;justify-content:center;gap:4px;transform:skew(-20deg);margin-bottom:16px}.dialogStripes i{width:12px;height:26px;background:#72c5e8}.dialogStripes i:nth-child(2){background:#154ca5}.dialogStripes i:nth-child(3){background:#e63242}.dialogKicker{font-size:10px;letter-spacing:2.7px;color:#8ea4b7;margin-bottom:8px;font-weight:800}.dialog h1{font-size:30px;font-weight:900;letter-spacing:2px}.dialog button.primary{border:1px solid #f26c75;background:linear-gradient(120deg,#c32737,#861b2b);border-radius:7px;min-width:185px;letter-spacing:1.4px}.menuPanel{top:9px;right:12px;border:1px solid #6d809252;border-radius:10px;background:#101820f5;box-shadow:0 12px 40px #000b}.menuPanel button{border-radius:6px;background:#26323e;border-color:#ffffff2e}
+@media(max-height:500px){.topbar{height:42px;min-height:42px}.hud{top:8px;left:8px;padding:8px 10px;width:min(275px,43vw)}.hudEyebrow{margin-bottom:6px;font-size:8px}.hud .scoreCell strong{font-size:19px}.hud .bestCell strong{font-size:17px}.scoreCell label,.speedHead{font-size:8px}.rightHud{top:8px;right:8px;width:125px;gap:5px}.speedBox{padding:7px 10px}.speedNumber{font-size:27px}.pursuitBox{padding:7px}.pursuitBox label{font-size:8px}.bottomLabel{bottom:7px;font-size:8px;padding:5px 10px}.control{height:48px;width:54px;bottom:7px}.control span{font-size:28px;line-height:25px}.control small{font-size:8px}}
+@media(max-width:620px){.hud{width:min(220px,46vw)}.hudEyebrow{font-size:7px;letter-spacing:1px}.scoreGrid{gap:5px}.hud .scoreCell strong{font-size:17px}.hud .bestCell strong{font-size:15px}.scoreCell label{font-size:8px;letter-spacing:.6px}.bestCell{padding-left:7px}.rightHud{width:105px}.speedNumber{font-size:25px}.speedHead{font-size:8px}.pursuitBox label{font-size:7px}.bottomLabel{display:none}}
+
+/* V30 minimal HUD: unobstructed road, lightweight speedometer */
+.hud.minimalHud{top:12px;left:14px;width:auto;min-width:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;filter:drop-shadow(0 2px 3px #000b)}
+.scoreValue{font:800 clamp(19px,2.6vw,29px)/1.05 Arial,sans-serif;letter-spacing:1px;color:#fff;font-variant-numeric:tabular-nums}
+.recordRow{display:flex;align-items:center;gap:5px;margin-top:5px;color:#e5e7ec;font:600 clamp(10px,1.2vw,14px)/1 Arial,sans-serif;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+.recordRow svg{width:13px;height:13px;color:#d8bd64}
+.rightHud{top:8px;right:12px;width:122px;gap:0;align-items:center}
+.speedDial{width:112px;height:91px;position:relative;filter:drop-shadow(0 2px 3px #000b)}
+.speedDial svg{width:100%;height:100%;overflow:visible}
+.dialTrack{fill:none;stroke:#ffffff55;stroke-width:5;stroke-linecap:round}
+.dialProgress{fill:none;stroke:#e6eef4;stroke-width:5;stroke-linecap:round;stroke-dasharray:0 100;transition:stroke-dasharray .2s linear}
+#dialNeedle{stroke:#e63242;stroke-width:2.5;stroke-linecap:round;transform-origin:60px 65px;transform:rotate(-135deg);transition:transform .2s linear}
+.speedReadout{position:absolute;left:0;right:0;top:40px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0}
+.speedCaption{font:700 9px/1 Arial,sans-serif;letter-spacing:1.5px;color:#e7edf3}
+.speedReadout strong{font:800 22px/1.05 Arial,sans-serif;color:white;font-variant-numeric:tabular-nums}
+.speedReadout small{font:700 8px/1 Arial,sans-serif;letter-spacing:1.1px;color:#e7edf3}
+.pursuitMini{display:flex;align-items:center;gap:5px;margin-top:-5px;font:700 9px/1.2 Arial,sans-serif;letter-spacing:.3px;color:#fff;text-shadow:0 2px 3px #000b}
+.pursuitMini .pursuitLight{width:6px;height:6px}
+@media(max-height:500px){.hud.minimalHud{top:5px;left:8px}.scoreValue{font-size:20px}.recordRow{font-size:10px}.rightHud{top:0;right:5px;width:95px}.speedDial{width:90px;height:75px}.speedReadout{top:33px}.speedReadout strong{font-size:17px}.speedCaption{font-size:7px}.pursuitMini{font-size:7px;margin-top:-4px}}
+@media(max-width:620px){.hud.minimalHud{top:9px;left:10px}.scoreValue{font-size:23px}.recordRow{font-size:11px}.rightHud{top:4px;right:6px;width:98px}.speedDial{width:96px;height:80px}.speedReadout{top:35px}.speedReadout strong{font-size:19px}.pursuitMini{font-size:8px}}
+
+/* V31 dark BMW-inspired instrument, no needle/text collisions */
+.topbar{background:linear-gradient(#17191d,#08090d);border-bottom-color:#30333a}.gameArea{background:#07121c}.gameArea:after{box-shadow:inset 0 0 38px #0007}.menuBtn{background:#17191f;border-color:#383c45}.control{background:#090e16d9;border-color:#535a65}.rightHud{top:12px;right:14px;width:128px;align-items:center;gap:7px}.speedDial{width:126px;height:126px;filter:drop-shadow(0 4px 8px #0009)}.speedDial svg{width:100%;height:100%;overflow:hidden}.speedReadout{top:43px;left:0;right:0;gap:2px}.speedCaption{font:700 9px/1 Arial,sans-serif;letter-spacing:1px;color:#d37a4e}.speedReadout strong{font:800 34px/1 Arial,sans-serif;color:#fff;letter-spacing:0}.speedReadout small{font:700 9px/1 Arial,sans-serif;color:#cf9b80}.pursuitMini{margin-top:0;font-size:9px;white-space:nowrap;background:#080d13ba;padding:4px 6px;border-radius:5px}.hud.minimalHud{top:15px}.scoreValue{color:#fff}.recordRow{color:#d0d2d6}
+@media(max-width:620px){.rightHud{top:10px;right:9px;width:112px}.speedDial{width:108px;height:108px}.speedReadout{top:36px}.speedReadout strong{font-size:29px}.speedCaption{font-size:8px}.speedReadout small{font-size:8px}.pursuitMini{font-size:8px}}
+@media(max-height:500px){.rightHud{top:3px;right:8px;width:94px;gap:1px}.speedDial{width:91px;height:91px}.speedReadout{top:30px}.speedReadout strong{font-size:23px}.speedCaption,.speedReadout small{font-size:7px}.pursuitMini{font-size:7px;padding:2px}}
+
+/* V33 cinematic M redesign — compact HUD, no road obstruction */
+.topbar{background:linear-gradient(180deg,#121820,#070b10);border-bottom:1px solid #303d4c;box-shadow:0 4px 20px #000b}
+.brand{font-weight:600;letter-spacing:.65px}.menuBtn{background:#101923;border:1px solid #314153;color:#d6e2ef}.home{background:#101923;border-color:#314153}
+.gameArea{background:#06111b}.gameArea:after{box-shadow:inset 0 0 90px #0008}
+.hud.minimalHud{top:13px;left:14px;filter:drop-shadow(0 2px 4px #000)}.scoreValue{font-weight:800;letter-spacing:2px;font-variant-numeric:tabular-nums;text-shadow:0 2px 7px #000}
+.recordRow{color:#c4cbd4}.recordRow svg{color:#e4b963}
+.rightHud{top:9px;right:12px;width:112px;gap:4px}.speedDial{width:106px;height:106px;filter:drop-shadow(0 4px 9px #000c)}.speedReadout{top:36px;gap:1px}.speedCaption{font-size:8px;color:#79cbed}.speedReadout strong{font-size:29px}.speedReadout small{font-size:8px;color:#b2cfe1}
+.pursuitMini{background:#08121be3;border:1px solid #ffffff22;border-radius:15px;padding:5px 8px;font-size:8px;letter-spacing:.4px}.pursuitMini .pursuitLight{background:#4a91c4}
+.control{height:54px;width:57px;border-radius:50%;background:#0b141bd9;border:1px solid #6c85965e;box-shadow:0 3px 15px #0008}.control span{font-size:34px}.control small{font-size:7px;letter-spacing:1px}.control:active{border-color:#80cbed;background:#17334a}
+.dialog{background:linear-gradient(150deg,#182330,#080d13);border-color:#52687a}.dialog button.primary{background:linear-gradient(100deg,#1e6394,#12355e);border-color:#6bbfe9}
+@media(max-width:620px){.rightHud{right:6px;top:8px;width:96px}.speedDial{width:92px;height:92px}.speedReadout{top:31px}.speedReadout strong{font-size:24px}.speedCaption,.speedReadout small{font-size:7px}.pursuitMini{font-size:7px;padding:4px 5px}.scoreValue{font-size:22px}.control{width:51px;height:51px}}
+@media(max-height:500px){.rightHud{top:2px}.speedDial{width:76px;height:76px}.speedReadout{top:25px}.speedReadout strong{font-size:20px}.control{height:43px;width:43px}}
+</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V35 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
+(()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,steerVelocity=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0,effects=[],gameOverDelay=0,goldPairs=new Set(),trafficId=0;try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=false;let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane);steerVelocity=0}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){cars=[];popups=[];effects=[];goldPairs=new Set();trafficId=0;gameOverDelay=0;dist=0;score=0;speed=76;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);steerVelocity=0;$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'||state==='crashing'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
+  if(state!=='play')return;
+  const next=Math.max(0,Math.min(2,lane+d));
+  if(next===lane)return;
+  const playerY=H*.65, oldLane=lane;
+  // Capture lane changes near approaching traffic, including the time needed
+  // for a two-step, three-lane maneuver.
+  for(const c of cars){
+    const dy=playerY-c.y;
+    if(!c.awarded && dy>=-15 && dy<=260){
+      c.moves.push({from:oldLane,to:next,time:t,dy});
+    }
+  }
+  lane=next;
+  // Pursuers react to the same lane changes as the player, but cannot
+  // instantly copy sharp weaving through traffic.
+  for(const cop of cops){
+    if(cop.state!=='chase'&&cop.state!=='approach')continue;
+    cop.target=next;
+    cop.reaction=Math.max(cop.reaction,.28);
+  }
+}$('left').onclick=()=>steer(-1);$('right').onclick=()=>steer(1);let x0=0;canvas.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});canvas.addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>24)steer(dx>0?1:-1)},{passive:true});window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='a'){e.preventDefault();steer(-1)}if(e.key==='ArrowRight'||e.key==='d'){e.preventDefault();steer(1)}if(e.key===' '||e.key==='Escape'){e.preventDefault();pause()}});function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h))}function poly(pts,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill()}function palm(x,y,s,flip=1){ctx.save();ctx.translate(x,y);ctx.scale(flip*s,s);rect(-4,-5,9,55,'#382b23');rect(-2,0,4,50,'#66503a');for(let i=0;i<7;i++){let a=i*Math.PI*2/7,ex=Math.cos(a)*38,ey=Math.sin(a)*20-9;poly([[0,0],[ex*.45,ey-10],[ex,ey+6],[ex*.65,ey+10]],i%2?'#17513f':'#27745a');poly([[ex*.45,ey-10],[ex,ey+6],[ex*.8,ey+17]],'#103a32')}ctx.restore()}function vehicle(x,y,color,s=1,player=false){
+  // Top-down vehicle artwork: player is a Brooklyn Grey 2023 X3 M40i-inspired SUV.
+  // Keep the original collision footprint; only the rendering changes.
+  const cw=Math.min((roadR-roadL)/3*.51,58)*s,ch=cw*1.65;
+  ctx.save();ctx.translate(Math.round(x),Math.round(y));
+  const w=cw,h=ch,body=player?'#8d9497':color;
+  // Ground shadow, four tires, sculpted fenders and vehicle silhouette.
+  ctx.fillStyle='rgba(0,0,0,.35)';ctx.beginPath();ctx.ellipse(2,4,w*.61,h*.53,0,0,Math.PI*2);ctx.fill();
+  rect(-w*.56,-h*.35,w*.16,h*.24,'#080b10');rect(w*.40,-h*.35,w*.16,h*.24,'#080b10');
+  rect(-w*.56,h*.17,w*.16,h*.23,'#080b10');rect(w*.40,h*.17,w*.16,h*.23,'#080b10');
+  poly([[-w*.39,-h*.50],[w*.39,-h*.50],[w*.48,-h*.36],[w*.49,h*.35],[w*.37,h*.50],[-w*.37,h*.50],[-w*.49,h*.35],[-w*.48,-h*.36]],body);
+  // Hood, shoulder lines, roof and windshield, with M40i-style dark panoramic roof.
+  poly([[-w*.37,-h*.44],[w*.37,-h*.44],[w*.35,-h*.24],[-w*.35,-h*.24]],player?'#aab0b2':'#ffffff23');
+  rect(-w*.36,-h*.22,w*.72,h*.21,'#182c39');
+  rect(-w*.32,-h*.20,w*.64,h*.045,'#7eafc1');
+  poly([[-w*.32,-h*.005],[w*.32,-h*.005],[w*.34,h*.26],[-w*.34,h*.26]],player?'#6b7379':'#00000018');
+  rect(-w*.285,h*.015,w*.57,h*.19,'#101e2b');
+  rect(-w*.26,h*.025,w*.52,h*.045,'#334d5b');
+  rect(-w*.34,h*.275,w*.68,h*.115,'#182b37');
+  rect(-w*.30,h*.28,w*.60,h*.035,'#7094a4');
+  // Glass edges, body creases and black side mirrors.
+  rect(-w*.44,-h*.13,w*.065,h*.35,player?'#b4babd':'#ffffff39');
+  rect(w*.375,-h*.13,w*.065,h*.35,'#131b22');
+  rect(-w*.53,-h*.17,w*.105,h*.115,'#141b21');rect(w*.425,-h*.17,w*.105,h*.115,'#141b21');
+  rect(-w*.39,h*.35,w*.78,h*.035,player?'#b8bec0':'#ffffff32');
+  // Front LED signature, twin-kidney grille; rear lamps and diffuser.
+  rect(-w*.38,-h*.47,w*.19,h*.055,'#d9f4ff');rect(w*.19,-h*.47,w*.19,h*.055,'#d9f4ff');
+  rect(-w*.13,-h*.49,w*.115,h*.06,'#10161a');rect(w*.015,-h*.49,w*.115,h*.06,'#10161a');
+  rect(-w*.42,h*.405,w*.24,h*.055,'#e62935');rect(w*.18,h*.405,w*.24,h*.055,'#e62935');
+  rect(-w*.18,h*.45,w*.36,h*.035,'#151b21');
+  if(player){
+    // Brooklyn Grey metallic highlights, no racing stripes: factory-inspired X3 M40i.
+    rect(-w*.39,-h*.38,w*.035,h*.69,'#c0c6c7');
+    rect(w*.355,-h*.38,w*.025,h*.69,'#596267');
+    rect(-w*.20,-h*.40,w*.40,h*.025,'#d3d6d5');
+    rect(-w*.10,h*.43,w*.20,h*.025,'#3e4549');
+  }
+  ctx.restore();return{cw,ch};
+}
+function policeVehicle(x,y,s=1){
+  vehicle(x,y,'#e8edf4',s,false);
+  const w=Math.min((roadR-roadL)/3*.51,58)*s;
+  const flash=Math.floor(t*7)%2===0;
+  rect(x-w*.35,y-6,w*.34,7,flash?'#ff303d':'#47171d');
+  rect(x+w*.01,y-6,w*.34,7,flash?'#10244d':'#2685ff');
+  ctx.save();ctx.globalAlpha=.17;
+  rect(x-w*.48,y-11,w*.47,17,flash?'#ff3046':'#24405a');
+  rect(x+w*.01,y-11,w*.47,17,flash?'#24405a':'#2685ff');ctx.restore();
+  rect(x-w*.16,y+11,w*.32,5,'#1b2435');
+}
+function scene(){rect(0,0,W,H,'#061b2a');let stripe=55,scroll=offset*.45;for(let y=-stripe+(scroll%stripe);y<H;y+=stripe){rect(0,y,W,2,'#0b3044');rect(8,y+19,Math.max(0,roadL-70),1,'#174056');rect(roadR+70,y+31,Math.max(0,W-roadR-70),1,'#174056')}let sand=Math.min(75,Math.max(24,W*.085));rect(roadL-sand,0,sand,H,'#302d25');rect(roadR,0,sand,H,'#302d25');for(let i=-2;i<Math.ceil(H/190)+2;i++){let y=i*190+(offset*.65%190);let leftJitter=Math.sin(i*12.73)*22,rightJitter=Math.sin(i*8.19+2)*25;let scale=Math.min(.72,sand/82);if(i%4!==1)palm(roadL-sand*.53,y+leftJitter,scale*(.85+.12*Math.sin(i*4.1)));if(i%5!==2)palm(roadR+sand*.53,y+82+rightJitter,scale*(.82+.13*Math.cos(i*3.7)),-1)}rect(roadL-6,0,roadR-roadL+12,H,'#a6afb2');rect(roadL,0,roadR-roadL,H,'#19232d');
+  // Clean asphalt: no random speckles that resemble rendering artifacts.
+  
+for(let y=-44+(offset%64);y<H;y+=64){rect(roadL-6,y,6,28,'#6b2731');rect(roadR,y,6,28,'#6b2731')}rect(roadL+8,0,3,H,'#758a95');rect(roadR-11,0,3,H,'#758a95');for(let k=1;k<=2;k++){let x=roadL+(roadR-roadL)*k/3;for(let y=-90+(offset%95);y<H;y+=95)rect(x-3,y,6,43,'#9eafb8')}for(let c of cars)vehicle(center(c.lane),c.y,c.color,c.s);for(const cop of cops){if(cop.state!=='wrecked')policeVehicle(cop.x,cop.y,.94)}
+  if(state!=='crashing'){ctx.save();ctx.translate(px,H*.65);ctx.rotate(Math.max(-.09,Math.min(.09,steerVelocity/1150)));vehicle(0,0,'#8d9497',1.05,true);ctx.restore();}
+  else {ctx.save();ctx.translate(px,H*.65);ctx.rotate(-.22);vehicle(0,0,'#55565a',1.05,true);ctx.restore();}
+  drawEffects();}
+function explosion(x,y,police=false){
+  const bits=[];for(let i=0;i<65;i++){let a=Math.random()*Math.PI*2,v=45+Math.random()*170;
+    bits.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-35,life:.75+Math.random()*.8,
+      color:['#ffdf61','#ff7a23','#e83c28','#e9e9e9','#323943'][Math.floor(Math.random()*5)]});}
+  effects.push({x,y,bits,life:1.55,police});
+}
+function drawEffects(){for(const e of effects){
+  const age=1.55-e.life, radius=Math.max(0,age*115);
+  ctx.save();ctx.globalCompositeOperation='screen';
+  if(age<.65){const glow=ctx.createRadialGradient(e.x,e.y,2,e.x,e.y,Math.max(12,85*age+20));glow.addColorStop(0,'rgba(255,255,230,.95)');glow.addColorStop(.3,'rgba(255,190,20,.85)');glow.addColorStop(.7,'rgba(255,75,10,.45)');glow.addColorStop(1,'rgba(255,50,0,0)');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(e.x,e.y,Math.max(12,85*age+20),0,Math.PI*2);ctx.fill();}
+  ctx.strokeStyle=e.police?'#ff9c30':'#ffe278';ctx.globalAlpha=Math.max(0,1-age/1.1);ctx.lineWidth=Math.max(1,7-age*5);ctx.beginPath();ctx.arc(e.x,e.y,radius,0,Math.PI*2);ctx.stroke();
+  for(const b of e.bits){if(b.life<=0)continue;ctx.globalAlpha=Math.min(1,b.life);rect(b.x,b.y,4+Math.max(0,b.life)*5,4+Math.max(0,b.life)*5,b.color)}ctx.restore();
+  if(e.police&&age<1.1){ctx.save();ctx.globalAlpha=Math.max(0,1-age);ctx.fillStyle='#fff';ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.fillText('✹',e.x,e.y-24-age*15);ctx.restore()}
+}}
+function addPoliceCrashBonus(x,y){
+  score+=1000;
+  popups.push({x:Math.max(12,Math.min(W-64,x+12)),y:Math.max(28,y-22),life:1.45,pts:1000,color:'#ff3030'});
+  $('score').textContent=fmt(score);
+  if(score>best){best=score;$('best').textContent=fmt(best);try{localStorage.setItem('mhighway-best',String(Math.floor(best)))}catch(e){}}
+}
+function finishCrash(){state='over';if(score>best){best=score;try{localStorage.setItem('mhighway-best',String(Math.floor(best)))}catch(e){}}$('best').textContent=fmt(best);show('GAME OVER',`Score: ${fmt(score)} • ${Math.floor(dist)} distance. Try to beat your best run!`,'TRY AGAIN')}function crash(){if(state!=='play')return;state='crashing';gameOverDelay=1.55;explosion(px,H*.65,false)}function award(c){
+  if(c.awarded)return;
+  c.awarded=true;
+  // A pass scores only when the traffic vehicle is exactly one lane away
+  // from the player's current lane. Same-lane or two-lane-away traffic
+  // earns nothing. Each qualifying vehicle is counted independently.
+  // Use the player's actual horizontal position rather than only the
+  // requested steering target to avoid rewarding a distant pass mid-turn.
+  const playerLane=Math.max(0,Math.min(2,Math.round((px-roadL)/((roadR-roadL)/3)-.5)));
+  if(Math.abs(playerLane-c.lane)!==1)return;
+  // Ordinary overtakes count quietly. No green popup unless the player
+  // deliberately cuts around traffic with genuinely tight clearance.
+  let pts=50,flash=false;
+  // Evaluate the player's actual lane changes near this car. A plain
+  // adjacent-lane overtake never creates a popup.
+  const recent=c.moves.filter(m=>t-m.time<=3.2 && m.dy>=-15 && m.dy<=260);
+  // A tight cut means the player escaped the occupied lane shortly before
+  // the car reached them, or moved into an adjacent lane at close range.
+  // Smaller forward clearance at the moment of the lane change earns
+  // the higher bonus. Three-lane tight cuts take priority.
+  const closeMoves=recent.filter(m=>m.dy>=0 && m.dy<=210 &&
+      (m.from===c.lane || m.to===c.lane));
+  if(closeMoves.length){
+    const nearest=Math.min(...closeMoves.map(m=>m.dy));
+    pts=nearest<=125?200:150;
+    flash=true;
+    for(let i=0;i<recent.length;i++)for(let j=i+1;j<recent.length;j++){
+      if(recent[j].time-recent[i].time<=1.8 &&
+         recent[i].to===recent[j].from &&
+         Math.abs(recent[j].to-recent[i].from)===2){pts=350}
+    }
+  }
+  // Gold threading bonus: pass between two staggered cars in neighboring
+  // lanes while weaving quickly through the opening. Requires actual steering,
+  // close longitudinal proximity and two distinct traffic cars.
+  const playerY=H*.65;
+  const recentMoves=c.moves.filter(m=>t-m.time<=2.5);
+  const weave=recentMoves.some((m,i)=>recentMoves.some((n,j)=>j>i && n.time-m.time<=1.65 && n.from===m.to && n.to!==m.from));
+  if(weave){
+    const other=cars.find(o=>o!==c && o.awarded===false && o.lane!==c.lane &&
+      Math.abs(o.y-c.y)<Math.max(115,H*.27) &&
+      o.moves.some(m=>t-m.time<=2.5) &&
+      Math.abs(o.y-playerY)<Math.max(175,H*.34));
+    if(other){
+      const key=[c.uid,other.uid].sort().join(':');
+      if(!goldPairs.has(key)){
+        goldPairs.add(key);pts=500;flash=true;
+      }
+    }
+  }
+  // Only skillful close cuts disrupt an active pursuit. The harder the
+  // maneuver, the more distance it creates; ordinary passes do not help.
+  if(flash){
+    for(const cop of cops){
+      if(cop.state!=='chase'&&cop.state!=='approach')continue;
+      // A hard cut creates a temporary speed advantage, not an instant teleport.
+      cop.escapeVelocity=Math.min(115,(cop.escapeVelocity||0)+(pts===500?72:pts===350?58:pts===200?43:31));
+      cop.reaction+=pts===500?1.7:pts===350?1.35:pts===200?.95:.65;
+      cop.stagger=Math.max(cop.stagger,pts>=350?1.2:.7);
+    }
+  }
+  score+=pts;
+  if(flash)popups.push({x:Math.min(W-50,px+24),y:H*.76-38,life:1.05,pts,color:pts===500?'#FFD700':pts===350?'#4c00b0':'#008000'});
+  $('score').textContent=fmt(score);
+  if(score>best){best=score;$('best').textContent=fmt(best);try{localStorage.setItem('mhighway-best',String(Math.floor(best)))}catch(e){}}
+}
+function update(dt){
+  if(state==='crashing'){
+    gameOverDelay-=dt;
+    for(const e of effects){e.life-=dt;for(const b of e.bits){b.x+=b.vx*dt;b.y+=b.vy*dt;b.vy+=180*dt;b.life-=dt}}
+    effects=effects.filter(e=>e.life>0);
+    if(gameOverDelay<=0)finishCrash();return;
+  }
+  if(state!=='play')return;
+  for(const e of effects){e.life-=dt;for(const b of e.bits){b.x+=b.vx*dt;b.y+=b.vy*dt;b.vy+=180*dt;b.life-=dt}}
+  effects=effects.filter(e=>e.life>0);
+  t+=dt;dist+=speed*dt*.75;
+  // Progressive difficulty with capped speed and reachable traffic patterns.
+  const level=Math.min(12,Math.floor(score/1050+t/17));
+  speed=Math.min(152,76+level*6.3);
+  offset+=speed*dt*2.6;
+  // Damped steering: gentle turn-in, a smooth lane transition, and no snap.
+  // Frame-rate-independent spring response; typical lane change ~0.3 seconds.
+  const steerTarget=center(lane);
+  const spring=125, damping=19;
+  steerVelocity+=(spring*(steerTarget-px)-damping*steerVelocity)*dt;
+  px+=steerVelocity*dt;
+  if(Math.abs(steerTarget-px)<.35&&Math.abs(steerVelocity)<2){px=steerTarget;steerVelocity=0;}
+  spawn-=dt;
+  // Pursuits are intermittent: meaningful calm periods after an escape.
+  patrolCooldown=Math.max(0,patrolCooldown-dt);
+  nextCop-=dt;
+  const activeCops=cops.filter(c=>c.state==='chase'||c.state==='approach').length;
+  if(nextCop<=0 && patrolCooldown<=0){
+    if(activeCops===0){
+      cops.push({id:++copId,lane,x:center(lane),target:lane,y:H+60,
+        gap:H*.35+135,reaction:.85,stagger:0,escapeVelocity:0,state:'approach',life:0,
+        blockedTime:0,turnDelay:0,commit:0,skill:0.82+Math.random()*.14});
+      nextCop=14+Math.random()*9;
+    }else if(activeCops<Math.min(3,1+Math.floor(score/3500)) && Math.random()<.42){
+      cops.push({id:++copId,lane,x:center(lane),target:lane,y:H+65,
+        gap:H*.38+150+activeCops*115,reaction:1.1,stagger:0,escapeVelocity:0,state:'approach',life:0,
+        blockedTime:0,turnDelay:0,commit:0,skill:0.82+Math.random()*.14});
+      nextCop=17+Math.random()*10;
+    }else nextCop=8+Math.random()*7;
+  }
+  const playerY=H*.65;
+  const laneW=(roadR-roadL)/3;
+  const carH=Math.min(laneW*.51,58)*1.65;
+  // Pursuit AI: enter visibly from below, accelerate into formation, then
+  // close the distance during easy driving. Skillful cuts force a setback.
+  // Assign independent pursuit slots. Rear units can pass when a genuinely
+  // clear lane exists, but cannot occupy another unit's collision footprint.
+  const activeFormation=cops.filter(c=>c.state==='chase'||c.state==='approach').sort((a,b)=>a.id-b.id);
+  for(const cop of cops){
+    cop.life+=dt;
+    if(cop.state==='wrecked'){cop.y+=dt*95;continue}
+    if(cop.state==='lost'){cop.y+=dt*165;continue}
+    cop.reaction=Math.max(0,cop.reaction-dt);
+    cop.commit=Math.max(0,(cop.commit||0)-dt);
+    cop.stagger=Math.max(0,cop.stagger-dt);
+    // Smoothly decay the player's speed advantage over several seconds.
+    cop.escapeVelocity=(cop.escapeVelocity||0)*Math.exp(-dt*.65);
+    const minGap=Math.max(carH*1.5+20,108);
+    const desiredGap=Math.max(minGap,Math.min(H*.26,165));
+    if(cop.state==='approach'){
+      // The car starts offscreen and visibly drives up the highway.
+      cop.gap-=dt*(145+Math.min(55,score/140));
+      if(cop.gap<=Math.max(desiredGap+70,H*.32))cop.state='chase';
+    }else{
+      // Without hard cuts police slowly gain ground, but never enter the
+      // player's collision box. Tight cuts temporarily reverse the chase.
+      const gain=12+Math.min(7,score/1600);
+      // Positive escape velocity makes the cop drift backward naturally.
+      cop.gap+=dt*(cop.escapeVelocity-gain);
+    }
+    // Keep a physically plausible longitudinal buffer between units, even
+    // while they're changing lanes. Smooth braking avoids sudden teleporting.
+    const aheadUnits=activeFormation.filter(other=>other!==cop && other.gap<cop.gap);
+    const nearestAhead=aheadUnits.sort((a,b)=>b.gap-a.gap)[0];
+    const formationBuffer=carH*1.45+20;
+    if(nearestAhead && cop.gap<nearestAhead.gap+formationBuffer){
+      cop.gap+=(nearestAhead.gap+formationBuffer-cop.gap)*Math.min(1,dt*3.2);
+    }
+    cop.gap=Math.max(minGap,cop.gap);
+    const copY=playerY+cop.gap;
+    // Police choose their OWN safest route through traffic, rather than
+    // mirroring the player's cuts. Look ahead and evaluate both adjacent lanes.
+    const scan=(n)=>{
+      const relevant=cars.filter(c=>c.lane===n);
+      let forward=999,backward=999;
+      for(const c of relevant){const dy=c.y-copY;
+        if(dy<0)forward=Math.min(forward,-dy);
+        else backward=Math.min(backward,dy);
+      }
+      // Treat other patrol cars as moving obstacles, not ghost vehicles.
+      for(const other of activeFormation){
+        if(other===cop)continue;
+        const otherLane=Math.round((other.x-roadL)/laneW-.5);
+        if(other.lane!==n && otherLane!==n)continue;
+        const dy=(other.y||playerY+other.gap)-copY;
+        if(dy<0)forward=Math.min(forward,Math.max(0,-dy-carH*.25));
+        else backward=Math.min(backward,Math.max(0,dy-carH*.25));
+      }
+      return {forward,backward};
+    };
+    const current=scan(cop.lane);
+    const blocked=current.forward<carH*2.7;
+    if(blocked){cop.blockedTime+=dt;cop.gap+=dt*6;}
+    else cop.blockedTime=Math.max(0,cop.blockedTime-dt*2);
+    if(cop.reaction<=0){
+      let chosen=cop.lane,best=-1e9;
+      for(const n of [cop.lane-1,cop.lane,cop.lane+1]){
+        if(n<0||n>2)continue;
+        const g=scan(n),changing=n!==cop.lane;
+        // No reckless cuts into another car's immediate footprint.
+        if(changing&&(g.forward<carH*(1.30+(.95-cop.skill)*.5)+12||g.backward<carH*1.32+8))continue;
+        const room=Math.min(320,g.forward);
+        const scoreLane=room*.76-Math.abs(n-lane)*10+(n===cop.lane?8:0)
+          -(blocked&&n===cop.lane?105:0);
+        if(scoreLane>best){best=scoreLane;chosen=n;}
+      }
+      if(chosen!==cop.lane){cop.lane=chosen;cop.commit=.42;cop.reaction=.36+Math.random()*.20;}
+      else cop.reaction=.16+Math.random()*.12;
+    }
+    // When the player makes no difficult cuts, police slowly close in.
+    // A blocked police lane slows the gain instead of forcing a crash.
+    if(cop.state==='chase'&&!blocked)cop.gap-=dt*(5+cop.skill*5);
+    // Smoothly animate across lanes; actual position is used for collisions.
+    // Smooth independent lane transitions. A second patrol cannot merge
+    // into an occupied slot, even if it chose the same opening.
+    let targetX=center(cop.lane);
+    for(const other of activeFormation){
+      if(other===cop)continue;
+      if(Math.abs((other.y||playerY+other.gap)-(playerY+cop.gap))<carH*1.35 &&
+         Math.abs(other.x-targetX)<laneW*.48){
+        targetX=cop.x;cop.reaction=Math.max(cop.reaction,.22);
+        break;
+      }
+    }
+    cop.x+=(targetX-cop.x)*Math.min(1,dt*(4.6+cop.skill*1.8));
+    cop.y=playerY+cop.gap;
+    // Police collisions are evaluated AFTER traffic moves, using both
+    // vehicles' real positions. This avoids missing collisions between frames.
+    cop.prevX=cop.previousX??cop.x;cop.prevY=cop.previousY??cop.y;
+    cop.previousX=cop.x;cop.previousY=cop.y;
+    if(cop.gap>H*.78+125 || cop.blockedTime>6.8){
+      cop.state='lost';escapedCops++;
+      patrolCooldown=Math.max(patrolCooldown,14+Math.random()*12);
+      nextCop=Math.max(nextCop,patrolCooldown);
+    }
+  }
+  cops=cops.filter(c=>c.state==='chase'||c.state==='approach'||(c.state==='lost'&&c.y<H+120));
+
+  if(spawn<=0){
+    // Traffic is arranged in reachable waves. Every row has an open lane,
+    // and successive two-car rows never require an instant two-lane jump.
+    // A one-car row between hard rows gives room for rewarding cut maneuvers.
+    const laneW=(roadR-roadL)/3;
+    const levelFactor=Math.min(1,level/12);
+    const hardChance=.34+levelFactor*.42;
+    const hard=Math.random()<hardChance && waveCount%3!==2;
+    let free;
+    const r=Math.random();
+    // The guaranteed corridor changes by at most one lane per wave.
+    // This prevents an impossible jump across two occupied lanes.
+    const candidates=[openLane];
+    if(openLane>0)candidates.push(openLane-1);
+    if(openLane<2)candidates.push(openLane+1);
+    free=candidates[Math.floor(Math.random()*candidates.length)];
+    // Every fourth wave is a single car, leaving two escape routes.
+    const blocked=(waveCount%4===3)?1:(hard?2:1);
+    let lanes=[0,1,2].filter(n=>n!==free);
+    if(blocked===1){
+      // Put the car in a lane the player may need to cut away from.
+      const preferred=(Math.random()<.58?openLane:lanes[Math.floor(Math.random()*lanes.length)]);
+      lanes=[preferred===free?lanes[Math.floor(Math.random()*lanes.length)]:preferred];
+    }
+    const colors=['#e63b30','#f4c22e','#1e76d9','#a6bbc2','#30a66c','#f5f0e7'];
+    // Each wave has its own traffic pace. Slower vehicles are caught sooner;
+    // faster vehicles require more planning. Cars within one wave share pace
+    // so they don't unpredictably overlap or close off the safe lane.
+    const paceOptions=[0.84,0.92,1.00,1.07,1.14];
+    const pace=paceOptions[Math.floor(Math.random()*paceOptions.length)];
+    // Keep new cars upstream of existing traffic, but never stack them
+    // so closely that the car-following correction freezes a vehicle.
+    const spawnY=-Math.max(105,carH*1.8);
+    for(const n of lanes){
+      const sameLane=cars.filter(c=>c.lane===n);
+      const nearest=sameLane.length?Math.min(...sameLane.map(c=>c.y)):Infinity;
+      const y=Math.min(spawnY,nearest-carH*2.65);
+      cars.push({uid:++trafficId,lane:n,y,color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,actualPace:pace,awarded:false,minClearance:Infinity,moves:[]});
+    }
+    openLane=free;waveCount++;
+    // At higher scores traffic is denser, but gaps scale with actual
+    // road speed and car size so the player has time to steer safely.
+    const travelSpeed=(speed+45)*2.15*1.22;
+    const carHeight=Math.min(laneW*.51,58)*1.65;
+    // Keep enough time between rows to steer into the open corridor.
+    // Density increases with both score and survival time, with a safety floor.
+    const safeGap=(carHeight*3.9)/travelSpeed+.58;
+    spawn=Math.max(safeGap,1.48-level*.033)+Math.random()*.22;
+    if(blocked===2 && free!==lastPattern)spawn+=.18;
+    lastPattern=free;
+    // Two-lane shifts need more room; keep the next row reachable.
+    if(blocked===2 && Math.abs(free-lane)===2)spawn+=.24;
+  }
+  // Traffic keeps moving: match the speed of a slower car ahead smoothly,
+  // with a strict positive speed floor. No position snapping or hard stops.
+  const minFollowing=carH*2.05;
+  for(let n=0;n<3;n++){
+    const line=cars.filter(c=>c.lane===n).sort((a,b)=>b.y-a.y);
+    for(let i=0;i<line.length;i++){
+      const c=line[i],ahead=line[i-1];
+      let target=c.pace;
+      if(ahead){
+        const gap=ahead.y-c.y;
+        const aheadPace=ahead.actualPace||ahead.pace;
+        if(gap<minFollowing*3.0)target=Math.min(target,aheadPace);
+        // Ease into the lead vehicle's pace without ever bringing traffic to a halt.
+        if(gap<minFollowing*1.65)target=Math.min(target,Math.max(.76,aheadPace*.98));
+        // Prevent closing on a vehicle while maintaining visible motion.
+        if(gap<minFollowing*1.3)target=Math.min(target,Math.max(.76,aheadPace*.97));
+      }
+      c.actualPace+=(Math.max(.76,target)-c.actualPace)*Math.min(1,dt*2.4);
+      c.actualPace=Math.max(.76,c.actualPace);
+    }
+  }
+  for(const c of cars){
+    const prevY=c.y;
+    c.y+=(speed+45)*dt*2.15*c.actualPace;
+    const dx=Math.abs(center(c.lane)-px);
+    // Actual overlapping rectangles, with a small forgiveness margin.
+    const collisionX=laneW*.48;
+    const collisionY=carH*.85;
+    if(Math.abs(c.y-playerY)<collisionY){
+      if(dx<collisionX){crash();break}
+      // Clearance is measured between the actual car bodies, not lane centers.
+      c.minClearance=Math.min(c.minClearance,dx-collisionX);
+    }
+    // Only a successful overtake counts, not simply changing lanes.
+    if(!c.awarded&&prevY<=playerY+carH&&c.y>playerY+carH){award(c)}
+  }
+  // Collision pass after ALL traffic has moved. Police can weave around
+  // traffic, but committing to a cut with insufficient clearance can wreck
+  // them. Test actual sprite rectangles, not merely lane-center equality.
+  for(const cop of cops){
+    if(cop.state!=='chase' || cop.life<1.6)continue;
+    const copWidth=laneW*.51*.94;
+    const copHeight=carH*.94;
+    const hit=cars.find(c=>{
+      const trafficWidth=laneW*.51*c.s;
+      const trafficHeight=carH*c.s;
+      return Math.abs(cop.x-center(c.lane))<(copWidth+trafficWidth)*.43 &&
+        Math.abs(cop.y-c.y)<(copHeight+trafficHeight)*.43;
+    });
+    if(hit){
+      // Contact is decisive; a crash no longer requires 0.24 seconds of
+      // overlap, which allowed traffic to pass through the police car.
+      cop.state='wrecked';cop.crashY=cop.y;explosion(cop.x,cop.y,true);addPoliceCrashBonus(cop.x,cop.y);
+      cop.y=cop.crashY;
+      patrolCooldown=Math.max(patrolCooldown,8+Math.random()*6);
+      nextCop=Math.max(nextCop,5+Math.random()*5);
+    }
+  }
+  cops=cops.filter(c=>c.state!=='wrecked' || c.life<0); // explosion remains visible in effects
+  cars=cars.filter(c=>c.y<H+125);
+  for(const p of popups){p.life-=dt;p.y-=dt*37}
+  popups=popups.filter(p=>p.life>0);
+  $('pursuitLabel').textContent=cops.some(c=>c.state==='chase'||c.state==='approach')?'PURSUIT: '+cops.filter(c=>c.state==='chase'||c.state==='approach').length+' UNIT(S)':'PURSUIT: CLEAR';
+  $('speed').textContent=String(Math.floor(speed)).padStart(3,'0');const frac=Math.max(0,Math.min(1,speed/160));$('dialProgress').style.strokeDasharray=(frac*75)+' 100';
+}
+function drawPopups(){
+  ctx.save();ctx.textAlign='left';
+  for(const p of popups){
+    ctx.globalAlpha=Math.min(1,p.life*2.1);
+    const x=Math.max(8,Math.min(W-52,p.x));
+    ctx.font='bold 13px monospace';
+    ctx.fillStyle=p.color;ctx.fillText(typeof p.pts==='number'?'+'+p.pts:p.pts,x,p.y);
+
+  }
+  ctx.restore();
+}
+function loop(now){let dt=Math.min((now-last)/1000||0,.05);last=now;update(dt);scene();drawPopups();requestAnimationFrame(loop)}requestAnimationFrame(loop)})();
 </script></body></html>
