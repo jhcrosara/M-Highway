@@ -43,7 +43,7 @@
 .dialog{background:linear-gradient(150deg,#182330,#080d13);border-color:#52687a}.dialog button.primary{background:linear-gradient(100deg,#1e6394,#12355e);border-color:#6bbfe9}
 @media(max-width:620px){.rightHud{right:6px;top:8px;width:96px}.speedDial{width:92px;height:92px}.speedReadout{top:31px}.speedReadout strong{font-size:24px}.speedCaption,.speedReadout small{font-size:7px}.pursuitMini{font-size:7px;padding:4px 5px}.scoreValue{font-size:22px}.control{width:51px;height:51px}}
 @media(max-height:500px){.rightHud{top:2px}.speedDial{width:76px;height:76px}.speedReadout{top:25px}.speedReadout strong{font-size:20px}.control{height:43px;width:43px}}
-</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V43 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
+</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V44 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
 (()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,steerVelocity=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0,effects=[],gameOverDelay=0,goldPairs=new Set(),trafficId=0;try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=false;let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane);steerVelocity=0}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){cars=[];popups=[];effects=[];goldPairs=new Set();trafficId=0;gameOverDelay=0;dist=0;score=0;speed=76;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);steerVelocity=0;$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'||state==='crashing'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
   if(state!=='play')return;
   const next=Math.max(0,Math.min(2,lane+d));
@@ -76,9 +76,18 @@ const spritePaths={
   npc_nissan_maxima_gray:'pieces/npc_nissan_maxima_gray.PNG',
   npc_tesla_white:'pieces/npc_tesla_white.PNG',
   npc_nyc_taxi:'pieces/npc_nyc_taxi.PNG',
-  npc_ford_f150_gray:'pieces/npc_ford_f150_gray.PNG'
+  npc_ford_f150_gray:'pieces/npc_ford_f150_gray.PNG',
+  npc_semi_truck_gray:'pieces/npc_semi_truck_gray.PNG'
 };
-const npcNames=Object.keys(spritePaths).filter(name=>name.startsWith('npc_'));
+const npcNames=Object.keys(spritePaths).filter(name=>name.startsWith('npc_') && name!=='npc_semi_truck_gray');
+const TRUCK='npc_semi_truck_gray';
+let truckCooldown=0;
+function vehicleLength(c){return c.sprite===TRUCK?2.25:1;}
+function chooseTrafficSprite(){
+  // Roughly 1 truck per 65 spawned vehicles, never back-to-back.
+  if(truckCooldown<=0 && spriteImages[TRUCK]?.complete && spriteImages[TRUCK]?.naturalWidth && Math.random()<.016){truckCooldown=18;return TRUCK;}
+  return npcNames[Math.floor(Math.random()*npcNames.length)];
+}
 for(const [name,path] of Object.entries(spritePaths)){
   const im=new Image();
   im.onerror=()=>console.warn('M Highway: sprite could not load:',path);
@@ -120,7 +129,7 @@ function fallbackCar(x,y,w,h,police=false){
   rect(-w*.32,h*.34,w*.64,h*.09,'#d62c39');
   ctx.restore();
 }
-// V42: every sprite uses the same on-screen dimensions as the player X3.
+// V44: every sprite uses the same on-screen dimensions as the player X3.
 // Do not multiply NPC/police artwork by their individual gameplay scale.
 function spriteDimensions(){
   const laneWidth=(roadR-roadL)/3;
@@ -131,7 +140,8 @@ function spriteDimensions(){
 function vehicle(x,y,color,s=1,player=false,sprite=null){
   const {w,h}=spriteDimensions();
   const name=player?'player':(sprite||npcNames[0]);
-  if(!drawSprite(name,x,y,w,h))fallbackCar(x,y,w,h);
+  const truck=name===TRUCK;
+  if(!drawSprite(name,x,y,w,truck?h*2.25:h))fallbackCar(x,y,w,truck?h*2.25:h);
   return {cw:w/1.18,ch:h/1.08};
 }
 function policeVehicle(x,y,s=1){
@@ -397,7 +407,7 @@ function update(dt){
     // A one-car row between hard rows gives room for rewarding cut maneuvers.
     const laneW=(roadR-roadL)/3;
     const levelFactor=Math.min(1,level/12);
-    const hardChance=.34+levelFactor*.42;
+    const hardChance=.42+levelFactor*.34;
     const hard=Math.random()<hardChance && waveCount%3!==2;
     let free;
     const r=Math.random();
@@ -408,7 +418,7 @@ function update(dt){
     if(openLane<2)candidates.push(openLane+1);
     free=candidates[Math.floor(Math.random()*candidates.length)];
     // Every fourth wave is a single car, leaving two escape routes.
-    const blocked=(waveCount%4===3)?1:(hard?2:1);
+    const blocked=(waveCount%5===4)?1:(hard?2:1);
     let lanes=[0,1,2].filter(n=>n!==free);
     if(blocked===1){
       // Put the car in a lane the player may need to cut away from.
@@ -426,11 +436,14 @@ function update(dt){
     const spawnY=-Math.max(105,carH*1.8);
     for(const n of lanes){
       const sameLane=cars.filter(c=>c.lane===n);
-      const nearest=sameLane.length?Math.min(...sameLane.map(c=>c.y)):Infinity;
-      const y=Math.min(spawnY,nearest-carH*2.65);
-      cars.push({uid:++trafficId,lane:n,y,sprite:npcNames[Math.floor(Math.random()*npcNames.length)],color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,actualPace:pace,awarded:false,minClearance:Infinity,moves:[]});
+      const nearest=sameLane.length?Math.min(...sameLane.map(c=>c.y-carH*(vehicleLength(c)-1)*.5)):Infinity;
+      const sprite=chooseTrafficSprite();
+      const truck=sprite===TRUCK;
+      const y=Math.min(spawnY-(truck?carH*.7:0),nearest-carH*(truck?3.9:2.65));
+      cars.push({uid:++trafficId,lane:n,y,sprite,color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,actualPace:pace,awarded:false,minClearance:Infinity,moves:[]});
     }
     openLane=free;waveCount++;
+    truckCooldown=Math.max(0,truckCooldown-1);
     // At higher scores traffic is denser, but gaps scale with actual
     // road speed and car size so the player has time to steer safely.
     const travelSpeed=(speed+45)*2.15*1.22;
@@ -438,15 +451,17 @@ function update(dt){
     // Keep enough time between rows to steer into the open corridor.
     // Density increases with both score and survival time, with a safety floor.
     const safeGap=(carHeight*3.9)/travelSpeed+.58;
-    spawn=Math.max(safeGap,1.48-level*.033)+Math.random()*.22;
-    if(blocked===2 && free!==lastPattern)spawn+=.18;
+    spawn=Math.max(safeGap,1.24-level*.032)+Math.random()*.20;
+    if(blocked===2 && free!==lastPattern)spawn+=.16;
     lastPattern=free;
     // Two-lane shifts need more room; keep the next row reachable.
-    if(blocked===2 && Math.abs(free-lane)===2)spawn+=.24;
+    if(blocked===2 && Math.abs(free-lane)===2)spawn+=.22;
+    // Extra maneuvering time after a truck wave, never a solid wall of trucks.
+    if(cars.some(c=>c.sprite===TRUCK && c.y<0 && c.y>-carH*5))spawn+=.42;
   }
   // Traffic keeps moving: match the speed of a slower car ahead smoothly,
   // with a strict positive speed floor. No position snapping or hard stops.
-  const minFollowing=carH*2.05;
+  const minFollowing=carH*2.25;
   for(let n=0;n<3;n++){
     const line=cars.filter(c=>c.lane===n).sort((a,b)=>b.y-a.y);
     for(let i=0;i<line.length;i++){
@@ -471,14 +486,14 @@ function update(dt){
     const dx=Math.abs(center(c.lane)-px);
     // Actual overlapping rectangles, with a small forgiveness margin.
     const collisionX=laneW*.48;
-    const collisionY=carH*.85;
+    const collisionY=carH*(vehicleLength(c)+1)*.425;
     if(Math.abs(c.y-playerY)<collisionY){
       if(dx<collisionX){crash();break}
       // Clearance is measured between the actual car bodies, not lane centers.
       c.minClearance=Math.min(c.minClearance,dx-collisionX);
     }
     // Only a successful overtake counts, not simply changing lanes.
-    if(!c.awarded&&prevY<=playerY+carH&&c.y>playerY+carH){award(c)}
+    if(!c.awarded&&prevY<=playerY+carH*(vehicleLength(c)+1)*.5&&c.y>playerY+carH*(vehicleLength(c)+1)*.5){award(c)}
   }
   // Collision pass after ALL traffic has moved. Police can weave around
   // traffic, but committing to a cut with insufficient clearance can wreck
@@ -489,7 +504,7 @@ function update(dt){
     const copHeight=carH*.94;
     const hit=cars.find(c=>{
       const trafficWidth=laneW*.51*c.s;
-      const trafficHeight=carH*c.s;
+      const trafficHeight=carH*c.s*vehicleLength(c);
       return Math.abs(cop.x-center(c.lane))<(copWidth+trafficWidth)*.43 &&
         Math.abs(cop.y-c.y)<(copHeight+trafficHeight)*.43;
     });
