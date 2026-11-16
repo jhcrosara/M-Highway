@@ -43,7 +43,7 @@
 .dialog{background:linear-gradient(150deg,#182330,#080d13);border-color:#52687a}.dialog button.primary{background:linear-gradient(100deg,#1e6394,#12355e);border-color:#6bbfe9}
 @media(max-width:620px){.rightHud{right:6px;top:8px;width:96px}.speedDial{width:92px;height:92px}.speedReadout{top:31px}.speedReadout strong{font-size:24px}.speedCaption,.speedReadout small{font-size:7px}.pursuitMini{font-size:7px;padding:4px 5px}.scoreValue{font-size:22px}.control{width:51px;height:51px}}
 @media(max-height:500px){.rightHud{top:2px}.speedDial{width:76px;height:76px}.speedReadout{top:25px}.speedReadout strong{font-size:20px}.control{height:43px;width:43px}}
-</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V37 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
+</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V39 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
 (()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,steerVelocity=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0,effects=[],gameOverDelay=0,goldPairs=new Set(),trafficId=0;try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=false;let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane);steerVelocity=0}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){cars=[];popups=[];effects=[];goldPairs=new Set();trafficId=0;gameOverDelay=0;dist=0;score=0;speed=76;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);steerVelocity=0;$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'||state==='crashing'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
   if(state!=='play')return;
   const next=Math.max(0,Math.min(2,lane+d));
@@ -65,108 +65,62 @@
     cop.target=next;
     cop.reaction=Math.max(cop.reaction,.28);
   }
-}$('left').onclick=()=>steer(-1);$('right').onclick=()=>steer(1);let x0=0;canvas.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});canvas.addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>24)steer(dx>0?1:-1)},{passive:true});window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='a'){e.preventDefault();steer(-1)}if(e.key==='ArrowRight'||e.key==='d'){e.preventDefault();steer(1)}if(e.key===' '||e.key==='Escape'){e.preventDefault();pause()}});function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h))}function poly(pts,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill()}function palm(x,y,s,flip=1){ctx.save();ctx.translate(x,y);ctx.scale(flip*s,s);rect(-4,-5,9,55,'#382b23');rect(-2,0,4,50,'#66503a');for(let i=0;i<7;i++){let a=i*Math.PI*2/7,ex=Math.cos(a)*38,ey=Math.sin(a)*20-9;poly([[0,0],[ex*.45,ey-10],[ex,ey+6],[ex*.65,ey+10]],i%2?'#17513f':'#27745a');poly([[ex*.45,ey-10],[ex,ey+6],[ex*.8,ey+17]],'#103a32')}ctx.restore()}function vehicle(x,y,color,s=1,player=false){
-  if(player){
-    // BMW F80 M3-inspired top-down silhouette, drawn directly in canvas.
-    // No source photograph or watermark is used.
-    const w=Math.min((roadR-roadL)/3*.51,58)*s, h=w*1.80;
-    ctx.save();ctx.translate(Math.round(x),Math.round(y));
-    const R=(x,y,ww,hh,c)=>{ctx.fillStyle=c;ctx.fillRect(x*w,y*h,ww*w,hh*h)};
-    const P=(pts,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(pts[0][0]*w,pts[0][1]*h);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0]*w,pts[i][1]*h);ctx.closePath();ctx.fill()};
-    ctx.fillStyle='rgba(0,0,0,.42)';ctx.beginPath();ctx.ellipse(2,4,w*.59,h*.54,0,0,Math.PI*2);ctx.fill();
-    // Wheels sit outside the fenders, as on a wide sports sedan.
-    for(const side of [-1,1]){R(side<0?-.55:.42,-.32,.13,.23,'#090d11');R(side<0?-.55:.42,.19,.13,.22,'#090d11')}
-    // Sloped front shoulders, narrower cabin, broad rear haunches.
-    P([[-.32,-.50],[.32,-.50],[.41,-.43],[.455,-.26],[.435,-.13],[.425,.20],[.46,.32],[.40,.45],[.30,.50],[-.30,.50],[-.40,.45],[-.46,.32],[-.425,.20],[-.435,-.13],[-.455,-.26],[-.41,-.43]],'#969da0');
-    P([[-.30,-.48],[.30,-.48],[.38,-.40],[.36,-.19],[-.36,-.19],[-.38,-.40]],'#aeb4b5');
-    // Long F80 hood, central power dome, angular creases.
-    P([[-.20,-.44],[-.09,-.44],[-.13,-.21],[-.27,-.21]],'#899194');
-    P([[.09,-.44],[.20,-.44],[.27,-.21],[.13,-.21]],'#899194');
-    P([[-.105,-.43],[.105,-.43],[.16,-.23],[-.16,-.23]],'#bfc3c3');
-    // Windshield and thin silver A-pillars.
-    P([[-.35,-.19],[.35,-.19],[.285,-.055],[-.285,-.055]],'#0c1923');
-    P([[-.33,-.183],[.33,-.183],[.31,-.154],[-.31,-.154]],'#6b9bab');
-    P([[-.36,-.19],[-.325,-.19],[-.28,-.045],[-.30,-.045]],'#d1d4d3');
-    P([[.325,-.19],[.36,-.19],[.30,-.045],[.28,-.045]],'#737d81');
-    // Painted roof, black side windows and rear windshield.
-    P([[-.30,-.045],[.30,-.045],[.315,.195],[-.315,.195]],'#afb5b6');
-    P([[-.31,-.015],[-.245,-.005],[-.25,.17],[-.32,.19]],'#192b37');
-    P([[.245,-.005],[.31,-.015],[.32,.19],[.25,.17]],'#192b37');
-    P([[-.24,.02],[.24,.02],[.24,.155],[-.24,.155]],'#9da5a8');
-    P([[-.315,.20],[.315,.20],[.35,.337],[-.35,.337]],'#10212d');
-    P([[-.28,.213],[.28,.213],[.30,.245],[-.30,.245]],'#5b879b');
-    // Distinctive mirrors and rear deck lid.
-    P([[-.42,-.16],[-.57,-.15],[-.54,-.075],[-.42,-.09]],'#151b20');
-    P([[.42,-.16],[.57,-.15],[.54,-.075],[.42,-.09]],'#151b20');
-    P([[-.35,.345],[.35,.345],[.36,.435],[-.36,.435]],'#b4b9b9');
-    R(-.29,.347,.58,.013,'#d3d6d5');
-    // Slim angel-eye-inspired headlights, split kidney grille and air intakes.
-    P([[-.40,-.455],[-.20,-.455],[-.225,-.415],[-.385,-.42]],'#e2f3ff');
-    P([[.20,-.455],[.40,-.455],[.385,-.42],[.225,-.415]],'#e2f3ff');
-    R(-.19,-.49,.175,.045,'#0a1218');R(.015,-.49,.175,.045,'#0a1218');
-    R(-.105,-.487,.015,.038,'#7a8589');R(.09,-.487,.015,.038,'#7a8589');
-    R(-.35,-.485,.12,.018,'#101920');R(.23,-.485,.12,.018,'#101920');
-    // L-shaped tail lights and rear diffuser.
-    P([[-.41,.393],[-.19,.393],[-.19,.425],[-.34,.425],[-.34,.452],[-.41,.452]],'#ed3445');
-    P([[.19,.393],[.41,.393],[.41,.452],[.34,.452],[.34,.425],[.19,.425]],'#ed3445');
-    R(-.26,.475,.52,.025,'#1b252a');
-    R(-.27,.495,.105,.018,'#0a0f12');R(.165,.495,.105,.018,'#0a0f12');
-    ctx.restore();return {cw:w,ch:h};
-  }
-
-  // Top-down vehicle artwork: player is a Brooklyn Grey 2023 X3 M40i-inspired SUV.
-  // Keep the original collision footprint; only the rendering changes.
-  const cw=Math.min((roadR-roadL)/3*.51,58)*s,ch=cw*1.65;
-  ctx.save();ctx.translate(Math.round(x),Math.round(y));
-  const w=cw,h=ch,body=player?'#8d9497':color;
-  // Ground shadow, four tires, sculpted fenders and vehicle silhouette.
-  ctx.fillStyle='rgba(0,0,0,.35)';ctx.beginPath();ctx.ellipse(2,4,w*.61,h*.53,0,0,Math.PI*2);ctx.fill();
-  rect(-w*.56,-h*.35,w*.16,h*.24,'#080b10');rect(w*.40,-h*.35,w*.16,h*.24,'#080b10');
-  rect(-w*.56,h*.17,w*.16,h*.23,'#080b10');rect(w*.40,h*.17,w*.16,h*.23,'#080b10');
-  poly([[-w*.39,-h*.50],[w*.39,-h*.50],[w*.48,-h*.36],[w*.49,h*.35],[w*.37,h*.50],[-w*.37,h*.50],[-w*.49,h*.35],[-w*.48,-h*.36]],body);
-  // Hood, shoulder lines, roof and windshield, with M40i-style dark panoramic roof.
-  poly([[-w*.37,-h*.44],[w*.37,-h*.44],[w*.35,-h*.24],[-w*.35,-h*.24]],player?'#aab0b2':'#ffffff23');
-  rect(-w*.36,-h*.22,w*.72,h*.21,'#182c39');
-  rect(-w*.32,-h*.20,w*.64,h*.045,'#7eafc1');
-  poly([[-w*.32,-h*.005],[w*.32,-h*.005],[w*.34,h*.26],[-w*.34,h*.26]],player?'#6b7379':'#00000018');
-  rect(-w*.285,h*.015,w*.57,h*.19,'#101e2b');
-  rect(-w*.26,h*.025,w*.52,h*.045,'#334d5b');
-  rect(-w*.34,h*.275,w*.68,h*.115,'#182b37');
-  rect(-w*.30,h*.28,w*.60,h*.035,'#7094a4');
-  // Glass edges, body creases and black side mirrors.
-  rect(-w*.44,-h*.13,w*.065,h*.35,player?'#b4babd':'#ffffff39');
-  rect(w*.375,-h*.13,w*.065,h*.35,'#131b22');
-  rect(-w*.53,-h*.17,w*.105,h*.115,'#141b21');rect(w*.425,-h*.17,w*.105,h*.115,'#141b21');
-  rect(-w*.39,h*.35,w*.78,h*.035,player?'#b8bec0':'#ffffff32');
-  // Front LED signature, twin-kidney grille; rear lamps and diffuser.
-  rect(-w*.38,-h*.47,w*.19,h*.055,'#d9f4ff');rect(w*.19,-h*.47,w*.19,h*.055,'#d9f4ff');
-  rect(-w*.13,-h*.49,w*.115,h*.06,'#10161a');rect(w*.015,-h*.49,w*.115,h*.06,'#10161a');
-  rect(-w*.42,h*.405,w*.24,h*.055,'#e62935');rect(w*.18,h*.405,w*.24,h*.055,'#e62935');
-  rect(-w*.18,h*.45,w*.36,h*.035,'#151b21');
-  if(player){
-    // Brooklyn Grey metallic highlights, no racing stripes: factory-inspired X3 M40i.
-    rect(-w*.39,-h*.38,w*.035,h*.69,'#c0c6c7');
-    rect(w*.355,-h*.38,w*.025,h*.69,'#596267');
-    rect(-w*.20,-h*.40,w*.40,h*.025,'#d3d6d5');
-    rect(-w*.10,h*.43,w*.20,h*.025,'#3e4549');
-  }
-  ctx.restore();return{cw,ch};
+}$('left').onclick=()=>steer(-1);$('right').onclick=()=>steer(1);let x0=0;canvas.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});canvas.addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>24)steer(dx>0?1:-1)},{passive:true});window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='a'){e.preventDefault();steer(-1)}if(e.key==='ArrowRight'||e.key==='d'){e.preventDefault();steer(1)}if(e.key===' '||e.key==='Escape'){e.preventDefault();pause()}});function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h))}function poly(pts,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill()}function palm(x,y,s,flip=1){ctx.save();ctx.translate(x,y);ctx.scale(flip*s,s);rect(-4,-5,9,55,'#382b23');rect(-2,0,4,50,'#66503a');for(let i=0;i<7;i++){let a=i*Math.PI*2/7,ex=Math.cos(a)*38,ey=Math.sin(a)*20-9;poly([[0,0],[ex*.45,ey-10],[ex,ey+6],[ex*.65,ey+10]],i%2?'#17513f':'#27745a');poly([[ex*.45,ey-10],[ex,ey+6],[ex*.8,ey+17]],'#103a32')}ctx.restore()}const spriteImages={};
+// Paths match the filenames in the GitHub pieces/ folder exactly.
+const spritePaths={
+  player:'pieces/player_bmw_x3_m40i.png',
+  police:'pieces/police_cruiser.png',
+  npc_bmw_f80_m3:'pieces/npc_bmw_f80_m3.png',
+  npc_bmw_e92_m3:'pieces/npc_bmw_e92_m3.png',
+  npc_bmw_328i_blue:'pieces/npc_bmw_328i_blue.png',
+  npc_toyota_corolla_white:'pieces/npc_toyota_corolla_white.png',
+  npc_honda_civic_red:'pieces/npc_honda_civic_red.png',
+  npc_nissan_maxima_gray:'pieces/npc_nissan_maxima_gray.png',
+  npc_tesla_white:'pieces/npc_tesla_white.png',
+  npc_nyc_taxi:'pieces/npc_nyc_taxi.png',
+  npc_ford_f150_gray:'pieces/npc_ford_f150_gray.png'
+};
+const npcNames=Object.keys(spritePaths).filter(name=>name.startsWith('npc_'));
+for(const [name,path] of Object.entries(spritePaths)){
+  const im=new Image(); im.src=path; spriteImages[name]=im;
+  im.onerror=()=>console.warn('M Highway: missing sprite',path);
+}
+function drawSprite(name,x,y,w,h){
+  const im=spriteImages[name];
+  if(!im||!im.complete||!im.naturalWidth)return false;
+  ctx.drawImage(im,Math.round(x-w/2),Math.round(y-h/2),w,h);
+  return true;
+}
+function fallbackCar(x,y,w,h,police=false){
+  // Visible fallback if an image has not loaded or a filename is incorrect.
+  ctx.save();ctx.translate(x,y);
+  rect(-w*.42,-h*.48,w*.84,h*.96,police?'#e6e9ed':'#7f98ad');
+  rect(-w*.31,-h*.13,w*.62,h*.38,'#172633');
+  rect(-w*.31,-h*.40,w*.62,h*.12,'#dce9f6');
+  rect(-w*.32,h*.34,w*.64,h*.09,'#d62c39');
+  ctx.restore();
+}
+function vehicle(x,y,color,s=1,player=false,sprite=null){
+  const cw=Math.min((roadR-roadL)/3*.51,58)*s;
+  const ch=cw*(player?1.80:1.65);
+  const name=player?'player':(sprite||npcNames[0]);
+  const width=cw*1.18,height=ch*1.08;
+  if(!drawSprite(name,x,y,width,height))fallbackCar(x,y,width,height);
+  return {cw,ch};
 }
 function policeVehicle(x,y,s=1){
-  vehicle(x,y,'#e8edf4',s,false);
   const w=Math.min((roadR-roadL)/3*.51,58)*s;
+  if(!drawSprite('police',x,y,w*1.18,w*1.65*1.08))fallbackCar(x,y,w*1.18,w*1.65*1.08,true);
   const flash=Math.floor(t*7)%2===0;
+  ctx.save();ctx.globalAlpha=.83;
   rect(x-w*.35,y-6,w*.34,7,flash?'#ff303d':'#47171d');
   rect(x+w*.01,y-6,w*.34,7,flash?'#10244d':'#2685ff');
-  ctx.save();ctx.globalAlpha=.17;
-  rect(x-w*.48,y-11,w*.47,17,flash?'#ff3046':'#24405a');
-  rect(x+w*.01,y-11,w*.47,17,flash?'#24405a':'#2685ff');ctx.restore();
-  rect(x-w*.16,y+11,w*.32,5,'#1b2435');
+  ctx.restore();
 }
 function scene(){rect(0,0,W,H,'#061b2a');let stripe=55,scroll=offset*.45;for(let y=-stripe+(scroll%stripe);y<H;y+=stripe){rect(0,y,W,2,'#0b3044');rect(8,y+19,Math.max(0,roadL-70),1,'#174056');rect(roadR+70,y+31,Math.max(0,W-roadR-70),1,'#174056')}let sand=Math.min(75,Math.max(24,W*.085));rect(roadL-sand,0,sand,H,'#302d25');rect(roadR,0,sand,H,'#302d25');for(let i=-2;i<Math.ceil(H/190)+2;i++){let y=i*190+(offset*.65%190);let leftJitter=Math.sin(i*12.73)*22,rightJitter=Math.sin(i*8.19+2)*25;let scale=Math.min(.72,sand/82);if(i%4!==1)palm(roadL-sand*.53,y+leftJitter,scale*(.85+.12*Math.sin(i*4.1)));if(i%5!==2)palm(roadR+sand*.53,y+82+rightJitter,scale*(.82+.13*Math.cos(i*3.7)),-1)}rect(roadL-6,0,roadR-roadL+12,H,'#a6afb2');rect(roadL,0,roadR-roadL,H,'#19232d');
   // Clean asphalt: no random speckles that resemble rendering artifacts.
   
-for(let y=-44+(offset%64);y<H;y+=64){rect(roadL-6,y,6,28,'#6b2731');rect(roadR,y,6,28,'#6b2731')}rect(roadL+8,0,3,H,'#758a95');rect(roadR-11,0,3,H,'#758a95');for(let k=1;k<=2;k++){let x=roadL+(roadR-roadL)*k/3;for(let y=-90+(offset%95);y<H;y+=95)rect(x-3,y,6,43,'#9eafb8')}for(let c of cars)vehicle(center(c.lane),c.y,c.color,c.s);for(const cop of cops){if(cop.state!=='wrecked')policeVehicle(cop.x,cop.y,.94)}
+for(let y=-44+(offset%64);y<H;y+=64){rect(roadL-6,y,6,28,'#6b2731');rect(roadR,y,6,28,'#6b2731')}rect(roadL+8,0,3,H,'#758a95');rect(roadR-11,0,3,H,'#758a95');for(let k=1;k<=2;k++){let x=roadL+(roadR-roadL)*k/3;for(let y=-90+(offset%95);y<H;y+=95)rect(x-3,y,6,43,'#9eafb8')}for(let c of cars)vehicle(center(c.lane),c.y,c.color,c.s,false,c.sprite);for(const cop of cops){if(cop.state!=='wrecked')policeVehicle(cop.x,cop.y,.94)}
   if(state!=='crashing'){ctx.save();ctx.translate(px,H*.65);ctx.rotate(Math.max(-.09,Math.min(.09,steerVelocity/1150)));vehicle(0,0,'#8d9497',1.05,true);ctx.restore();}
   else {ctx.save();ctx.translate(px,H*.65);ctx.rotate(-.22);vehicle(0,0,'#55565a',1.05,true);ctx.restore();}
   drawEffects();}
@@ -441,7 +395,7 @@ function update(dt){
       const sameLane=cars.filter(c=>c.lane===n);
       const nearest=sameLane.length?Math.min(...sameLane.map(c=>c.y)):Infinity;
       const y=Math.min(spawnY,nearest-carH*2.65);
-      cars.push({uid:++trafficId,lane:n,y,color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,actualPace:pace,awarded:false,minClearance:Infinity,moves:[]});
+      cars.push({uid:++trafficId,lane:n,y,sprite:npcNames[Math.floor(Math.random()*npcNames.length)],color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,actualPace:pace,awarded:false,minClearance:Infinity,moves:[]});
     }
     openLane=free;waveCount++;
     // At higher scores traffic is denser, but gaps scale with actual
