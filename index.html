@@ -95,7 +95,8 @@ function finishCrash(){state='over';if(score>best){best=score;try{localStorage.s
   if(flash){
     for(const cop of cops){
       if(cop.state!=='chase'&&cop.state!=='approach')continue;
-      cop.gap+=pts===500?160:pts===350?125:pts===200?88:60;
+      // A hard cut creates a temporary speed advantage, not an instant teleport.
+      cop.escapeVelocity=Math.min(115,(cop.escapeVelocity||0)+(pts===500?72:pts===350?58:pts===200?43:31));
       cop.reaction+=pts===500?1.7:pts===350?1.35:pts===200?.95:.65;
       cop.stagger=Math.max(cop.stagger,pts>=350?1.2:.7);
     }
@@ -129,12 +130,12 @@ function update(dt){
   if(nextCop<=0 && patrolCooldown<=0){
     if(activeCops===0){
       cops.push({id:++copId,lane,x:center(lane),target:lane,y:H+60,
-        gap:H*.35+135,reaction:.85,stagger:0,state:'approach',life:0,
+        gap:H*.35+135,reaction:.85,stagger:0,escapeVelocity:0,state:'approach',life:0,
         blockedTime:0,turnDelay:0});
       nextCop=14+Math.random()*9;
     }else if(activeCops<Math.min(3,1+Math.floor(score/3500)) && Math.random()<.42){
       cops.push({id:++copId,lane,x:center(lane),target:lane,y:H+65,
-        gap:H*.38+150,reaction:1.1,stagger:0,state:'approach',life:0,
+        gap:H*.38+150,reaction:1.1,stagger:0,escapeVelocity:0,state:'approach',life:0,
         blockedTime:0,turnDelay:0});
       nextCop=17+Math.random()*10;
     }else nextCop=8+Math.random()*7;
@@ -150,6 +151,8 @@ function update(dt){
     if(cop.state==='lost'){cop.y+=dt*165;continue}
     cop.reaction=Math.max(0,cop.reaction-dt);
     cop.stagger=Math.max(0,cop.stagger-dt);
+    // Smoothly decay the player's speed advantage over several seconds.
+    cop.escapeVelocity=(cop.escapeVelocity||0)*Math.exp(-dt*.65);
     const minGap=Math.max(carH*1.5+20,108);
     const desiredGap=Math.max(minGap,Math.min(H*.26,165));
     if(cop.state==='approach'){
@@ -159,8 +162,9 @@ function update(dt){
     }else{
       // Without hard cuts police slowly gain ground, but never enter the
       // player's collision box. Tight cuts temporarily reverse the chase.
-      const gain=cop.stagger>0?2:12+Math.min(7,score/1600);
-      cop.gap-=dt*gain;
+      const gain=12+Math.min(7,score/1600);
+      // Positive escape velocity makes the cop drift backward naturally.
+      cop.gap+=dt*(cop.escapeVelocity-gain);
     }
     cop.gap=Math.max(minGap,cop.gap);
     const copY=playerY+cop.gap;
