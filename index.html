@@ -69,53 +69,54 @@
  .hud.minimalHud .recordRow svg{width:12px;height:12px;}
  .coinHud{top:91px;left:10px;}
 }
-</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V59 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="coinHud"><span>●</span><b id="coinBalance">0</b></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><button class="secondary" id="openGarage">GARAGE / STORE</button><div class="notice">For use only while parked.</div></div></div><section id="garage" class="garagePanel hidden"><div class="garageTop"><h2>M GARAGE</h2><button id="garageBack">BACK</button></div><div class="garageTop"><div class="garageBalance">🟡 <span id="garageBalance">0</span> COINS</div></div><div class="garageGrid" id="garageGrid"></div><p class="garageNote">Collect coins during runs. Cars now cost more and coins are rarer. Purchases and your selected car are saved on this device. Tap an owned vehicle to equip it. Your selection is saved automatically and used in your next run. Higher-tier cars have improved speed and handling.</p></section></main></div><script>
+</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V60 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="coinHud"><span>●</span><b id="coinBalance">0</b></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><button class="secondary" id="openGarage">GARAGE / STORE</button><div class="notice">For use only while parked.</div></div></div><section id="garage" class="garagePanel hidden"><div class="garageTop"><h2>M GARAGE</h2><button id="garageBack">BACK</button></div><div class="garageTop"><div class="garageBalance">🟡 <span id="garageBalance">0</span> COINS</div></div><div class="garageGrid" id="garageGrid"></div><p class="garageNote">Collect coins during runs. Cars now cost more and coins are rarer. Purchases and your selected car are saved on this device. Tap an owned vehicle to equip it. Your selection is saved automatically and used in your next run. Higher-tier cars have improved speed and handling.</p></section></main></div><script>
 (()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');const developerPreview=new URLSearchParams(location.search).get('developer')==='1';let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,steerVelocity=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0,effects=[],gameOverDelay=0,goldPairs=new Set(),trafficId=0,coins=[],coinSpawn=1.6,bank=0,owned=['player'],selectedCar='player',combo=1,comboEnergy=0,comboTime=0,boostTime=0,powerups=[],powerupSpawn=42,lineTarget=null,lineBalance=0,lastSteerAt=-99,lastSteerDir=0,lineThreadAwarded=new Set(),lineGrace=0,lineLastCorrection=-99;try{bank=Math.max(0,Number(localStorage.getItem('mhighway-coins')||0));owned=JSON.parse(localStorage.getItem('mhighway-owned')||'["player"]');selectedCar=localStorage.getItem('mhighway-selected')||'player';if(!Array.isArray(owned))owned=['player'];if(!owned.includes('player'))owned.push('player');if(!owned.includes(selectedCar))selectedCar='player'}catch(e){}try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);$('coinBalance').textContent=Math.floor(bank);function saveGarage(){try{localStorage.setItem('mhighway-coins',String(Math.floor(bank)));localStorage.setItem('mhighway-owned',JSON.stringify(owned));localStorage.setItem('mhighway-selected',selectedCar)}catch(e){}}function refreshBalance(){$('coinBalance').textContent=Math.floor(bank);$('garageBalance').textContent=Math.floor(bank)}function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane);steerVelocity=0}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){lineTarget=null;lineBalance=0;lastSteerAt=-99;lastSteerDir=0;lineThreadAwarded=new Set();lineGrace=0;lineLastCorrection=-99;combo=1;comboEnergy=0;comboTime=0;boostTime=0;powerups=[];powerupSpawn=38+Math.random()*25;updateMultiplierHud();coins=[];coinSpawn=2.8;cars=[];popups=[];effects=[];goldPairs=new Set();trafficId=0;gameOverDelay=0;dist=0;score=0;speed=carPerformance().start;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);steerVelocity=0;$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('openGarage').onclick=()=>openGarage();$('garageBack').onclick=()=>{$('garage').classList.add('hidden');renderGarage();};$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'||state==='crashing'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
-  // Precision line riding: quickly countersteer while crossing a divider.
-  // No new buttons; alternating left/right taps stabilizes the car on a line.
   if(state!=='play')return;
   const laneW=(roadR-roadL)/3;
   const divider1=roadL+laneW,divider2=roadL+laneW*2;
   const nearest=Math.abs(px-divider1)<Math.abs(px-divider2)?divider1:divider2;
-  // A countersteer during an actual lane transition catches the divider.
-  // You must begin the change early enough: it cannot teleport you to safety.
-  const moving=Math.abs(steerVelocity)>laneW*.16;
-  const nearDivider=Math.abs(px-nearest)<laneW*.49;
-  const countersteer=lastSteerDir===-d && t-lastSteerAt<.75;
+  const countersteer=lastSteerDir===-d && t-lastSteerAt<.95;
+  const moving=Math.abs(steerVelocity)>laneW*.10;
+  const nearDivider=Math.abs(px-nearest)<laneW*.55;
   lastSteerAt=t;lastSteerDir=d;
-  if(lineTarget!==null){
-    // Alternate corrections to keep balancing. Same-direction taps exit.
+  if(lineTarget!==null && lineBalance>0){
     if(countersteer){
-      lineBalance=.55;lineGrace=.48;lineLastCorrection=t;
-      // Tiny deliberate correction, rather than magnetic auto-centering.
-      lineTarget=nearest+Math.max(-laneW*.065,Math.min(laneW*.065,(px-nearest)*.22));
+      // One more alternating swipe extends the ride, without requiring
+      // constant tapping. The extension is capped to prevent indefinite safety.
+      lineBalance=Math.min(3.1,Math.max(lineBalance,1.35)+.85);
+      lineGrace=lineBalance;
+      lineLastCorrection=t;
       return;
     }
-    lineTarget=null;lineBalance=0;
-  }else if(nearDivider && moving && countersteer){
+    // A deliberate same-direction swipe exits immediately into that side.
+    const heldLine=lineTarget;
+    lineTarget=null;lineBalance=0;lineGrace=0;
+    lane=d<0?(Math.abs(heldLine-divider1)<1?0:1):
+      (Math.abs(heldLine-divider1)<1?1:2);
+    // Keep the original spring steering: don't snap px to the lane.
+    for(const cop of cops){if(cop.state==='chase'||cop.state==='approach'){
+      cop.target=lane;cop.reaction=Math.max(cop.reaction,.28);
+    }}
+    return;
+  }
+  if(countersteer && nearDivider && moving){
+    // A single right-left or left-right catches the divider for ~1.8 sec.
+    // The car still travels into the line with the normal spring motion.
     lineTarget=nearest;
-    lineBalance=.55;lineGrace=.48;lineLastCorrection=t;
+    lineBalance=1.8;lineGrace=1.8;lineLastCorrection=t;
     return;
   }
   const next=Math.max(0,Math.min(2,lane+d));
   if(next===lane)return;
-  const playerY=H*.65, oldLane=lane;
-  // Capture lane changes near approaching traffic, including the time needed
-  // for a two-step, three-lane maneuver.
+  const playerY=H*.65,oldLane=lane;
   for(const c of cars){
     const dy=playerY-c.y;
-    if(!c.awarded && dy>=-15 && dy<=260){
-      c.moves.push({from:oldLane,to:next,time:t,dy});
-    }
+    if(!c.awarded&&dy>=-15&&dy<=260)c.moves.push({from:oldLane,to:next,time:t,dy});
   }
   lane=next;
-  // Pursuers react to the same lane changes as the player, but cannot
-  // instantly copy sharp weaving through traffic.
-  for(const cop of cops){
-    if(cop.state!=='chase'&&cop.state!=='approach')continue;
-    cop.target=next;
-    cop.reaction=Math.max(cop.reaction,.28);
-  }
+  for(const cop of cops){if(cop.state==='chase'||cop.state==='approach'){
+    cop.target=next;cop.reaction=Math.max(cop.reaction,.28);
+  }}
 }$('left').onclick=()=>steer(-1);$('right').onclick=()=>steer(1);let x0=0;canvas.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});canvas.addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>24)steer(dx>0?1:-1)},{passive:true});window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='a'){e.preventDefault();steer(-1)}if(e.key==='ArrowRight'||e.key==='d'){e.preventDefault();steer(1)}if(e.key===' '||e.key==='Escape'){e.preventDefault();pause()}});function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h))}function poly(pts,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill()}function palm(x,y,s,flip=1){ctx.save();ctx.translate(x,y);ctx.scale(flip*s,s);rect(-4,-5,9,55,'#382b23');rect(-2,0,4,50,'#66503a');for(let i=0;i<7;i++){let a=i*Math.PI*2/7,ex=Math.cos(a)*38,ey=Math.sin(a)*20-9;poly([[0,0],[ex*.45,ey-10],[ex,ey+6],[ex*.65,ey+10]],i%2?'#17513f':'#27745a');poly([[ex*.45,ey-10],[ex,ey+6],[ex*.8,ey+17]],'#103a32')}ctx.restore()}const spriteImages={};
 // Paths match the filenames in the GitHub pieces/ folder exactly.
 const spritePaths={
@@ -475,7 +476,19 @@ function update(dt){
   offset+=speed*dt*2.6;
   // Damped steering: gentle turn-in, a smooth lane transition, and no snap.
   // Frame-rate-independent spring response; typical lane change ~0.3 seconds.
-  if(lineBalance>0){lineBalance=Math.max(0,lineBalance-dt);if(lineBalance===0)lineTarget=null}
+  if(lineBalance>0){
+    lineBalance=Math.max(0,lineBalance-dt);
+    if(lineBalance===0){
+      // Resume into the lane on the side of the divider where the car is.
+      // This avoids a sudden target jump to a stale lane after the hold.
+      const held=lineTarget;
+      if(held!==null){
+        const leftLane=Math.abs(held-(roadL+(roadR-roadL)/3))<1?0:1;
+        lane=px<held?leftLane:leftLane+1;
+      }
+      lineTarget=null;
+    }
+  }
   lineGrace=Math.max(0,lineGrace-dt);
   const steerTarget=lineTarget!==null?lineTarget:center(lane);
   const spring=perf.spring, damping=perf.damping;
@@ -720,9 +733,10 @@ function update(dt){
       // short, narrow tolerance for the side mirrors/body overlap. Repeated
       // countersteering renews it; drifting or missing a beat ends the run.
       const threading=lineGrace>0 && lineBalance>0 &&
-        t-lineLastCorrection<.50 && lineError<laneWidth*.145;
+        lineError<laneWidth*.23;
       const shallowOverlap=collisionX-dx;
-      const threadingTolerance=laneWidth*.105;
+      // Narrow active skill corridor; no blanket immunity to collisions.
+      const threadingTolerance=laneWidth*.15;
       const protectedThread=threading && shallowOverlap>0 &&
         shallowOverlap<threadingTolerance &&
         Math.abs(c.y-playerY)<collisionY*.98;
