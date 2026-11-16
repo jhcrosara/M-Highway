@@ -45,9 +45,9 @@
 @media(max-height:500px){.rightHud{top:2px}.speedDial{width:76px;height:76px}.speedReadout{top:25px}.speedReadout strong{font-size:20px}.control{height:43px;width:43px}}
 
 /* V45 garage and coin economy */
-.coinHud{position:absolute;left:17px;top:91px;z-index:2;display:flex;align-items:center;gap:6px;background:#0b131bdc;border:1px solid #b58c3577;border-radius:20px;padding:5px 10px;font:800 13px Arial;color:#ffd269;pointer-events:none}.coinHud span{font-size:17px}.dialog .secondary{background:#1d2d3b;border:1px solid #6485a0;border-radius:7px;margin-top:10px;min-width:185px}.garagePanel{position:absolute;inset:0;z-index:6;overflow-y:auto;background:#080d14f5;padding:18px 16px 30px;touch-action:pan-y}.garageTop{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:720px;margin:0 auto 16px}.garageTop h2{margin:0;font-size:22px;letter-spacing:2px}.garageTop button,.garageCard button{background:#233648;color:white;border:1px solid #5e819c;border-radius:7px;padding:10px 13px;font-weight:700}.garageBalance{color:#ffd269;font-weight:800;margin:6px 0 18px}.garageGrid{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.garageCard{border:1px solid #3a4a5a;background:#111d2a;border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}.garageCard.selected{border-color:#70bce7}.garageCar{height:132px;width:100%;object-fit:contain}.garageMissing{height:132px;display:grid;place-items:center;color:#71889b;font-size:12px}.garageCard strong{font-size:13px}.garageCard small{color:#b7c5d1;min-height:27px}.garageCard button{width:100%;font-size:12px}.garageCard button:disabled{opacity:.5}.garageNote{max-width:720px;margin:16px auto;color:#8ca3b6;font-size:12px;line-height:1.5}@media(max-height:460px){.coinHud{top:62px}.garageCar,.garageMissing{height:86px}}
-</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V45 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="coinHud"><span>●</span><b id="coinBalance">0</b></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><button class="secondary" id="openGarage">GARAGE / STORE</button><div class="notice">For use only while parked.</div></div></div><section id="garage" class="garagePanel hidden"><div class="garageTop"><h2>M GARAGE</h2><button id="garageBack">BACK</button></div><div class="garageTop"><div class="garageBalance">🟡 <span id="garageBalance">0</span> COINS</div></div><div class="garageGrid" id="garageGrid"></div><p class="garageNote">Collect coins during runs. Purchases and your selected car are saved on this device. New player vehicle images go in pieces/ and must match the filenames in the garage catalog.</p></section></main></div><script>
-(()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,steerVelocity=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0,effects=[],gameOverDelay=0,goldPairs=new Set(),trafficId=0,coins=[],coinSpawn=1.6,bank=0,owned=['player'],selectedCar='player';try{bank=Math.max(0,Number(localStorage.getItem('mhighway-coins')||0));owned=JSON.parse(localStorage.getItem('mhighway-owned')||'["player"]');selectedCar=localStorage.getItem('mhighway-selected')||'player';if(!Array.isArray(owned))owned=['player'];if(!owned.includes('player'))owned.push('player');if(!owned.includes(selectedCar))selectedCar='player'}catch(e){}try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);$('coinBalance').textContent=Math.floor(bank);function saveGarage(){try{localStorage.setItem('mhighway-coins',String(Math.floor(bank)));localStorage.setItem('mhighway-owned',JSON.stringify(owned));localStorage.setItem('mhighway-selected',selectedCar)}catch(e){}}function refreshBalance(){$('coinBalance').textContent=Math.floor(bank);$('garageBalance').textContent=Math.floor(bank)}function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=false;let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane);steerVelocity=0}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){coins=[];coinSpawn=1.2;cars=[];popups=[];effects=[];goldPairs=new Set();trafficId=0;gameOverDelay=0;dist=0;score=0;speed=76;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);steerVelocity=0;$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('openGarage').onclick=()=>openGarage();$('garageBack').onclick=()=>{$('garage').classList.add('hidden');renderGarage();};$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'||state==='crashing'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
+.coinHud{position:absolute;left:17px;top:91px;z-index:2;display:flex;align-items:center;gap:6px;background:#0b131bdc;border:1px solid #b58c3577;border-radius:20px;padding:5px 10px;font:800 13px Arial;color:#ffd269;pointer-events:none}.coinHud span{font-size:17px}.dialog .secondary{background:#1d2d3b;border:1px solid #6485a0;border-radius:7px;margin-top:10px;min-width:185px}.garagePanel{position:absolute;inset:0;z-index:6;overflow-y:auto;background:#080d14f5;padding:18px 16px 30px;touch-action:pan-y}.garageTop{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:720px;margin:0 auto 16px}.garageTop h2{margin:0;font-size:22px;letter-spacing:2px}.garageTop button,.garageCard button{background:#233648;color:white;border:1px solid #5e819c;border-radius:7px;padding:10px 13px;font-weight:700}.garageBalance{color:#ffd269;font-weight:800;margin:6px 0 18px}.garageGrid{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.garageCard{border:1px solid #3a4a5a;background:#111d2a;border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}.garageCard.selected{border-color:#70bce7}.garageCar{height:154px;width:100%;max-width:140px;object-fit:contain}.garageMissing{height:132px;display:grid;place-items:center;color:#71889b;font-size:12px}.garageCard strong{font-size:13px}.garageSpecs{font-size:10px;color:#8bb8d7;line-height:1.45}.garageCard small{color:#b7c5d1;min-height:27px}.garageCard button{width:100%;font-size:12px}.garageCard button:disabled{opacity:.5}.garageNote{max-width:720px;margin:16px auto;color:#8ca3b6;font-size:12px;line-height:1.5}@media(max-height:460px){.coinHud{top:62px}.garageCar,.garageMissing{height:86px}}
+</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V47 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud minimalHud"><div class="scoreValue" id="score">000000</div><div class="recordRow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 3h10v3h4v3c0 3-2 5-5 5-.7 1.4-1.8 2.3-3 2.7V20h4v2H7v-2h4v-3.3c-1.2-.4-2.3-1.3-3-2.7-3 0-5-2-5-5V6h4V3Zm0 5H5v1c0 1.3.7 2.3 2 2.7V8Zm10 0v3.7c1.3-.4 2-1.4 2-2.7V8h-2Z"/></svg><span id="best">000000</span></div></div><div class="coinHud"><span>●</span><b id="coinBalance">0</b></div><div class="rightHud"><div class="speedDial" aria-label="Speedometer"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="mBlueRing" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#22527b"/><stop offset=".55" stop-color="#1485c4"/><stop offset="1" stop-color="#79cbed"/></linearGradient></defs><circle cx="80" cy="80" r="72" fill="#08090ce8" stroke="#e6e6e8" stroke-width="3.5"/><circle cx="80" cy="80" r="62" fill="#101923" stroke="#2d465c" stroke-width="1.5"/><circle cx="80" cy="80" r="53" fill="none" stroke="#18364b" stroke-width="18"/><circle id="dialProgress" cx="80" cy="80" r="53" fill="none" stroke="url(#mBlueRing)" stroke-width="18" stroke-dasharray="0 100" pathLength="100" transform="rotate(135 80 80)"/><circle cx="80" cy="80" r="42" fill="#090a0d"/><g stroke="#0b0c0e" stroke-width="1.3"><path d="M27 80h22 M111 80h22 M80 27v22 M80 111v22 M43 43l16 16 M101 101l16 16 M117 43l-16 16 M59 101l-16 16"/></g><text x="30" y="119" fill="#a8c5d8" font-size="11">0</text><text x="115" y="119" fill="#a8c5d8" font-size="11">160</text></svg><div class="speedReadout"><span class="speedCaption">SPEED</span><strong id="speed">076</strong><small>MPH</small></div></div><div class="pursuitMini"><span class="pursuitLight"></span><span id="pursuitLabel">PURSUIT: CLEAR</span></div></div><button class="control left" id="left" aria-label="Steer left"><span>‹</span><small>LEFT</small></button><button class="control right" id="right" aria-label="Steer right"><span>›</span><small>RIGHT</small></button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><div class="dialogStripes"><i></i><i></i><i></i></div><div class="dialogKicker">M PERFORMANCE ARCADE</div><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><button class="secondary" id="openGarage">GARAGE / STORE</button><div class="notice">For use only while parked.</div></div></div><section id="garage" class="garagePanel hidden"><div class="garageTop"><h2>M GARAGE</h2><button id="garageBack">BACK</button></div><div class="garageTop"><div class="garageBalance">🟡 <span id="garageBalance">0</span> COINS</div></div><div class="garageGrid" id="garageGrid"></div><p class="garageNote">Collect coins during runs. Cars now cost more and coins are rarer. Purchases and your selected car are saved on this device. Tap an owned vehicle to equip it. Your selection is saved automatically and used in your next run. Higher-tier cars have improved speed and handling.</p></section></main></div><script>
+(()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');const developerPreview=new URLSearchParams(location.search).get('developer')==='1';let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,steerVelocity=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0,effects=[],gameOverDelay=0,goldPairs=new Set(),trafficId=0,coins=[],coinSpawn=1.6,bank=0,owned=['player'],selectedCar='player';try{bank=Math.max(0,Number(localStorage.getItem('mhighway-coins')||0));owned=JSON.parse(localStorage.getItem('mhighway-owned')||'["player"]');selectedCar=localStorage.getItem('mhighway-selected')||'player';if(!Array.isArray(owned))owned=['player'];if(!owned.includes('player'))owned.push('player');if(!owned.includes(selectedCar))selectedCar='player'}catch(e){}try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);$('coinBalance').textContent=Math.floor(bank);function saveGarage(){try{localStorage.setItem('mhighway-coins',String(Math.floor(bank)));localStorage.setItem('mhighway-owned',JSON.stringify(owned));localStorage.setItem('mhighway-selected',selectedCar)}catch(e){}}function refreshBalance(){$('coinBalance').textContent=Math.floor(bank);$('garageBalance').textContent=Math.floor(bank)}function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane);steerVelocity=0}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){coins=[];coinSpawn=2.8;cars=[];popups=[];effects=[];goldPairs=new Set();trafficId=0;gameOverDelay=0;dist=0;score=0;speed=carPerformance().start;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);steerVelocity=0;$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('openGarage').onclick=()=>openGarage();$('garageBack').onclick=()=>{$('garage').classList.add('hidden');renderGarage();};$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'||state==='crashing'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
   if(state!=='play')return;
   const next=Math.max(0,Math.min(2,lane+d));
   if(next===lane)return;
@@ -72,10 +72,16 @@
 // Paths match the filenames in the GitHub pieces/ folder exactly.
 const spritePaths={
   player:'pieces/player_bmw_x3_m40i.PNG',
-  player_bmw_m3:'pieces/player_bmw_m3.PNG',
-  player_porsche_911:'pieces/player_porsche_911.PNG',
+  player_bmw_m340i:'pieces/player_bmw_m340i.PNG',
+  player_mustang_gt:'pieces/player_mustang_gt.PNG',
+  player_bmw_f80_m3:'pieces/player_bmw_f80_m3.PNG',
+  player_bmw_e92_m3:'pieces/player_bmw_e92_m3.PNG',
+  player_bmw_m5_cs:'pieces/player_bmw_m5_cs.PNG',
+  player_amg_gt63s:'pieces/player_amg_gt63s.PNG',
+  player_porsche_gt3rs:'pieces/player_porsche_gt3rs.PNG',
+  player_lamborghini_svj:'pieces/player_lamborghini_svj.PNG',
+  player_bugatti_chiron:'pieces/player_bugatti_chiron.PNG',
   player_nissan_gtr:'pieces/player_nissan_gtr.PNG',
-  player_lamborghini:'pieces/player_lamborghini.PNG',
   police:'pieces/police_cruiser.PNG',
   npc_bmw_328i_blue:'pieces/npc_bmw_328i_blue.PNG',
   npc_toyota_corolla_white:'pieces/npc_toyota_corolla_white.PNG',
@@ -86,15 +92,72 @@ const spritePaths={
   npc_ford_f150_gray:'pieces/npc_ford_f150_gray.PNG',
   npc_semi_truck_gray:'pieces/npc_semi_truck_gray.PNG'
 };
+// Arcade progression from entry-level performance to hypercar.
+// Performance is a gameplay balance choice, not a real-world lap-time ranking.
 const garageCatalog=[
-  {id:'player',name:'BMW X3 M40i',price:0},
-  {id:'player_bmw_m3',name:'BMW M3',price:120},
-  {id:'player_porsche_911',name:'Porsche 911',price:250},
-  {id:'player_nissan_gtr',name:'Nissan GT-R',price:400},
-  {id:'player_lamborghini',name:'Lamborghini',price:650}
+  {id:'player',name:'BMW X3 M40i',price:0,tier:0},
+  {id:'player_bmw_m340i',name:'BMW M340i',price:350,tier:1},
+  {id:'player_mustang_gt',name:'Mustang GT',price:600,tier:2},
+  {id:'player_bmw_e92_m3',name:'BMW E92 M3',price:950,tier:3},
+  {id:'player_bmw_f80_m3',name:'BMW F80 M3',price:1450,tier:4},
+  {id:'player_bmw_m5_cs',name:'BMW M5 CS',price:2200,tier:5},
+  {id:'player_amg_gt63s',name:'AMG GT 63 S',price:3000,tier:6},
+  {id:'player_nissan_gtr',name:'Nissan GT-R',price:4000,tier:7},
+  {id:'player_porsche_gt3rs',name:'Porsche 911 GT3 RS',price:5500,tier:8},
+  {id:'player_lamborghini_svj',name:'Lamborghini SVJ',price:7500,tier:9},
+  {id:'player_bugatti_chiron',name:'Bugatti Chiron',price:11000,tier:10}
 ];
-function renderGarage(){refreshBalance();const root=$('garageGrid');root.replaceChildren();for(const item of garageCatalog){const hasImage=!!(spriteImages[item.id]?.complete&&spriteImages[item.id]?.naturalWidth);const isOwned=owned.includes(item.id),isSelected=selectedCar===item.id;const card=document.createElement('div');card.className='garageCard'+(isSelected?' selected':'');const pic=document.createElement(hasImage?'img':'div');if(hasImage){pic.src=spritePaths[item.id];pic.className='garageCar';pic.alt=item.name}else{pic.className='garageMissing';pic.textContent='IMAGE COMING SOON'}const title=document.createElement('strong');title.textContent=item.name;const status=document.createElement('small');status.textContent=isSelected?'CURRENT VEHICLE':isOwned?'OWNED':hasImage?item.price+' COINS':'ADD IMAGE TO UNLOCK';const btn=document.createElement('button');btn.textContent=isSelected?'SELECTED':isOwned?'EQUIP':hasImage?'BUY · '+item.price+' 🟡':'NOT AVAILABLE';btn.disabled=isSelected||(!isOwned&&!hasImage)||(!isOwned&&bank<item.price);btn.onclick=()=>{if(!owned.includes(item.id)){if(!hasImage||bank<item.price)return;bank-=item.price;owned.push(item.id)}selectedCar=item.id;saveGarage();renderGarage()};card.append(pic,title,status,btn);root.append(card)}}
-function openGarage(){if(state==='play'||state==='crashing')return;menu.classList.add('hidden');renderGarage();$('garage').classList.remove('hidden')}
+function selectedSpec(){return garageCatalog.find(c=>c.id===selectedCar)||garageCatalog[0]}
+function carPerformance(){const tier=selectedSpec().tier;return {
+  // Top-end advantage is meaningful but kept modest for fair traffic patterns.
+  start:76+tier*1.4, cap:152+tier*2.8,
+  spring:125+tier*6.2, damping:19+tier*.22,
+  bonus:tier
+}}
+function garagePreview(name){
+  const im=spriteImages[name];
+  const canvas=document.createElement('canvas');
+  canvas.width=140;canvas.height=190;canvas.className='garageCar';
+  if(!im?.naturalWidth)return canvas;
+  const b=getSpriteBounds(name,im),cx=canvas.getContext('2d');
+  const scale=Math.min(108/b.w,172/b.h);
+  const w=b.w*scale,h=b.h*scale;
+  cx.imageSmoothingEnabled=true;cx.imageSmoothingQuality='high';
+  cx.drawImage(im,b.x,b.y,b.w,b.h,(140-w)/2,(190-h)/2,w,h);
+  return canvas;
+}
+function renderGarage(){
+  refreshBalance();
+  const root=$('garageGrid');root.replaceChildren();
+  for(const item of garageCatalog){
+    const hasImage=!!spriteImages[item.id]?.naturalWidth;
+    const isOwned=developerPreview||owned.includes(item.id),isSelected=selectedCar===item.id;
+    const card=document.createElement('div');
+    card.className='garageCard'+(isSelected?' selected':'');
+    const pic=hasImage?garagePreview(item.id):document.createElement('div');
+    if(!hasImage){pic.className='garageMissing';pic.textContent='IMAGE NOT FOUND'}
+    const title=document.createElement('strong');title.textContent=item.name;
+    const specs=document.createElement('small');specs.className='garageSpecs';
+    specs.textContent='SPEED '+(76+item.tier*1.4).toFixed(0)+'–'+(152+item.tier*2.8).toFixed(0)+' MPH  ·  HANDLING '+(55+item.tier*4)+' / 100';
+    const status=document.createElement('small');
+    status.textContent=isSelected?'✓ EQUIPPED':developerPreview?'DEV PREVIEW · UNLOCKED':isOwned?'OWNED · TAP TO EQUIP':hasImage?item.price+' COINS':'IMAGE MISSING';
+    const btn=document.createElement('button');
+    btn.textContent=isSelected?'EQUIPPED':isOwned?'EQUIP':hasImage?'BUY · '+item.price+' 🟡':'NOT AVAILABLE';
+    btn.disabled=isSelected||(!isOwned&&!hasImage)||(!isOwned&&bank<item.price);
+    const choose=()=>{
+      if(!hasImage)return;
+      if(!developerPreview&&!owned.includes(item.id)){
+        if(bank<item.price)return;
+        bank-=item.price;owned.push(item.id);
+      }
+      selectedCar=item.id;saveGarage();renderGarage();
+    };
+    btn.onclick=choose;
+    if(isOwned&&!isSelected){card.style.cursor='pointer';card.onclick=e=>{if(e.target!==btn)choose()}}
+    card.append(pic,title,specs,status,btn);root.append(card);
+  }
+}
+function openGarage(){if(developerPreview){$('garageNoteDev')?.remove();const note=document.createElement('p');note.id='garageNoteDev';note.className='garageNote';note.style.color='#ffd269';note.textContent='DEVELOPER PREVIEW — All cars are available for testing. Purchases and coin balances are not bypassed for normal players.';$('garageGrid').after(note)}if(state==='play'||state==='crashing')return;menu.classList.add('hidden');renderGarage();$('garage').classList.remove('hidden')}
 const npcNames=Object.keys(spritePaths).filter(name=>name.startsWith('npc_') && name!=='npc_semi_truck_gray');
 const TRUCK='npc_semi_truck_gray';
 let truckCooldown=0;
@@ -107,6 +170,7 @@ function chooseTrafficSprite(){
 for(const [name,path] of Object.entries(spritePaths)){
   const im=new Image();
   im.onerror=()=>console.warn('M Highway: sprite could not load:',path);
+  im.onload=()=>{if(!$('garage').classList.contains('hidden'))renderGarage()};
   spriteImages[name]=im;
   im.src=path;
 }
@@ -282,18 +346,19 @@ function update(dt){
   effects=effects.filter(e=>e.life>0);
   t+=dt;dist+=speed*dt*.75;
   coinSpawn-=dt;
-  if(coinSpawn<=0){const n=Math.floor(Math.random()*3);const y=-30;if(!cars.some(c=>c.lane===n&&Math.abs(c.y-y)<155))coins.push({lane:n,y});coinSpawn=1.35+Math.random()*1.4}
+  if(coinSpawn<=0){const n=Math.floor(Math.random()*3);const y=-30;if(!cars.some(c=>c.lane===n&&Math.abs(c.y-y)<155))coins.push({lane:n,y});coinSpawn=2.6+Math.random()*2.1}
   const coinSpeed=(speed+45)*2.15;
-  for(const c of coins){c.y+=coinSpeed*dt;if(Math.abs(c.y-H*.65)<Math.max(23,H*.025)&&Math.abs(center(c.lane)-px)<(roadR-roadL)/3*.31){c.collected=true;bank+=5;refreshBalance();saveGarage();popups.push({x:px,y:H*.65-40,pts:'+5 🟡',color:'#ffd15a',life:.85})}}
+  for(const c of coins){c.y+=coinSpeed*dt;if(Math.abs(c.y-H*.65)<Math.max(23,H*.025)&&Math.abs(center(c.lane)-px)<(roadR-roadL)/3*.31){c.collected=true;bank+=2;refreshBalance();saveGarage();popups.push({x:px,y:H*.65-40,pts:'+2 🟡',color:'#ffd15a',life:.85})}}
   coins=coins.filter(c=>!c.collected&&c.y<H+40);
   // Progressive difficulty with capped speed and reachable traffic patterns.
   const level=Math.min(12,Math.floor(score/1050+t/17));
-  speed=Math.min(152,76+level*6.3);
+  const perf=carPerformance();
+  speed=Math.min(perf.cap,perf.start+level*(6.3+perf.bonus*.04));
   offset+=speed*dt*2.6;
   // Damped steering: gentle turn-in, a smooth lane transition, and no snap.
   // Frame-rate-independent spring response; typical lane change ~0.3 seconds.
   const steerTarget=center(lane);
-  const spring=125, damping=19;
+  const spring=perf.spring, damping=perf.damping;
   steerVelocity+=(spring*(steerTarget-px)-damping*steerVelocity)*dt;
   px+=steerVelocity*dt;
   if(Math.abs(steerTarget-px)<.35&&Math.abs(steerVelocity)<2){px=steerTarget;steerVelocity=0;}
