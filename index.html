@@ -1,11 +1,11 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>M Highway</title><style>
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#08090b;color:#fff;font-family:Arial,Helvetica,sans-serif;touch-action:none}button{font:inherit;color:inherit;cursor:pointer}.app{height:100vh;height:100dvh;display:flex;flex-direction:column}.topbar{height:58px;min-height:58px;display:flex;align-items:center;gap:14px;padding:0 22px;background:linear-gradient(#18191d,#08090b);border-bottom:2px solid #54565a;position:relative;z-index:3}.topbar:after{content:"";position:absolute;bottom:-2px;left:76px;width:210px;height:3px;background:#d92735}.brand{display:flex;align-items:center;gap:10px;font-size:22px;letter-spacing:.2px;font-weight:500}.mstripes{display:inline-flex;gap:2px;transform:skew(-22deg);margin-right:3px}.mstripes i{width:8px;height:21px;background:#6cc9ee}.mstripes i:nth-child(2){background:#154ca5}.mstripes i:nth-child(3){background:#ef3447}.home,.menuBtn{height:42px;min-width:46px;border:0;background:transparent;font-size:24px}.menuBtn{margin-left:auto;font-size:13px;letter-spacing:1.3px;color:#c9ccd2}.home svg{width:23px;height:23px;fill:white}.gameArea{flex:1;min-height:0;position:relative;overflow:hidden;background:#07568a}canvas{width:100%;height:100%;display:block;image-rendering:pixelated}.hud{position:absolute;left:12px;top:12px;z-index:1;background:#090b0df0;border:2px solid #eee;border-radius:3px;padding:10px 13px;min-width:136px;font-family:monospace;pointer-events:none;text-shadow:2px 2px #000}.hud label{display:block;font-size:12px;font-weight:bold;letter-spacing:1px}.hud strong{display:block;font-size:25px;line-height:1.16;margin-bottom:8px;color:#f04b42}.hud strong.white{color:#fff}.hud strong:last-child{margin-bottom:0}.control{position:absolute;bottom:14px;z-index:2;width:76px;height:62px;border:1px solid #ffffff70;border-radius:10px;background:#080b10a8;font-size:29px;touch-action:manipulation}.left{left:14px}.right{right:14px}.overlay{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;background:#05070bcf;padding:12px}.hidden{display:none!important}.dialog{width:min(420px,90%);padding:22px 24px;text-align:center;background:linear-gradient(150deg,#242a33,#101318);border:1px solid #777b85;box-shadow:0 15px 55px #000b}.dialog h1{margin:0 0 10px;font-size:26px;letter-spacing:1.5px}.dialog p{color:#d1d4d8;line-height:1.45;font-size:14px}.dialog button,.menuPanel button{border:1px solid #757b85;background:#313842;padding:12px 24px;min-height:45px;font-weight:bold}.dialog button.primary{background:#9c2029;border-color:#e2434b}.menuPanel{position:absolute;right:10px;top:8px;z-index:5;background:#161a21;border:1px solid #666;padding:12px;display:grid;gap:8px;min-width:160px;box-shadow:0 12px 35px #0009}.notice{font-size:11px;color:#aeb3bd;margin-top:12px}@media(max-height:460px){.topbar{height:42px;min-height:42px;padding:0 12px}.brand{font-size:17px}.mstripes i{height:16px;width:6px}.home,.menuBtn{height:36px}.hud{top:7px;left:7px;padding:6px 9px;min-width:112px}.hud label{font-size:10px}.hud strong{font-size:18px;margin-bottom:5px}.control{height:45px;width:55px;bottom:8px}.dialog{padding:13px}.dialog h1{font-size:21px}.dialog p{font-size:12px;margin:8px 0}.dialog button{min-height:37px;padding:8px 16px}}@media(max-width:560px){.topbar{padding:0 10px;gap:7px}.brand{font-size:17px}.hud{min-width:105px;padding:7px}.hud label{font-size:10px}.hud strong{font-size:19px}.control{width:54px;height:50px}}
-</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V15 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud"><label>HI-SCORE</label><strong id="best">000000</strong><label>SCORE</label><strong class="white" id="score">000000</strong><label id="pursuitLabel">PURSUIT: CLEAR</label><label>SPEED</label><strong class="white"><span id="speed">076</span><small style="font-size:12px"> MPH</small></strong></div><button class="control left" id="left" aria-label="Steer left">◀</button><button class="control right" id="right" aria-label="Steer right">▶</button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
-(()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=9,escapedCops=0,copId=0;try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=false;let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane)}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){cars=[];popups=[];dist=0;score=0;speed=76;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=3;escapedCops=0;copId=0;lane=1;px=center(lane);$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
+</style></head><body><div class="app"><header class="topbar"><button class="home" id="home" aria-label="Game home"><svg viewBox="0 0 24 24"><path d="M12 2 2 11h3v10h6v-7h3v7h6V11h3z"/></svg></button><div class="brand"><span class="mstripes"><i></i><i></i><i></i></span><span><b>M</b> Highway</span></div><button class="menuBtn" id="menuBtn">V16 · MENU ▾</button></header><main class="gameArea" id="area"><canvas id="game"></canvas><div class="hud"><label>HI-SCORE</label><strong id="best">000000</strong><label>SCORE</label><strong class="white" id="score">000000</strong><label id="pursuitLabel">PURSUIT: CLEAR</label><label>SPEED</label><strong class="white"><span id="speed">076</span><small style="font-size:12px"> MPH</small></strong></div><button class="control left" id="left" aria-label="Steer left">◀</button><button class="control right" id="right" aria-label="Steer right">▶</button><div class="menuPanel hidden" id="menuPanel"><button id="pause">PAUSE</button><button id="restart">NEW GAME</button><button id="closeMenu">CLOSE</button></div><div class="overlay" id="overlay"><div class="dialog"><h1 id="headline">M HIGHWAY</h1><p id="message">Outrun pursuing police! Tight cuts can shake them off, but more patrols return as your score climbs. Tap arrows or swipe to steer.</p><button class="primary" id="start">START GAME</button><div class="notice">For use only while parked.</div></div></div></main></div><script>
+(()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),area=$('area'),overlay=$('overlay'),menu=$('menuPanel');let W=0,H=0,D=1,roadL=0,roadR=0,lane=1,px=0,cars=[],dist=0,score=0,speed=76,best=0,offset=0,spawn=0,last=0,state='menu',t=0,popups=[],lastPattern=-1,openLane=1,waveCount=0,cops=[],nextCop=16,escapedCops=0,copId=0,patrolCooldown=0;try{best=Number(localStorage.getItem('mhighway-best')||0)}catch(e){}const fmt=n=>String(Math.floor(n)).padStart(6,'0');$('best').textContent=fmt(best);function size(){let r=area.getBoundingClientRect();W=r.width;H=r.height;D=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(W*D));canvas.height=Math.max(1,Math.floor(H*D));ctx.setTransform(D,0,0,D,0,0);ctx.imageSmoothingEnabled=false;let roadWidth=Math.min(W*.58,Math.max(205,H*.88));roadL=(W-roadWidth)/2;roadR=roadL+roadWidth;px=center(lane)}function center(n){return roadL+(roadR-roadL)*(n+.5)/3}window.addEventListener('resize',size);size();function show(title,msg,action){$('headline').textContent=title;$('message').textContent=msg;$('start').textContent=action;overlay.classList.remove('hidden')}function start(){cars=[];popups=[];dist=0;score=0;speed=76;offset=0;t=0;spawn=.95;lastPattern=-1;openLane=1;waveCount=0;cops=[];nextCop=12+Math.random()*8;patrolCooldown=0;escapedCops=0;copId=0;lane=1;px=center(lane);$('score').textContent=fmt(0);$('pursuitLabel').textContent='PURSUIT: CLEAR';state='play';overlay.classList.add('hidden');menu.classList.add('hidden');last=performance.now()}function pause(){if(state==='play'){state='pause';show('PAUSED','Your highway run is paused.','RESUME')}else if(state==='pause'){state='play';overlay.classList.add('hidden');last=performance.now()}menu.classList.add('hidden')}$('start').onclick=()=>state==='pause'?pause():start();$('pause').onclick=pause;$('restart').onclick=start;$('menuBtn').onclick=()=>menu.classList.toggle('hidden');$('closeMenu').onclick=()=>menu.classList.add('hidden');$('home').onclick=()=>{if(state==='play'||state==='pause'){state='menu';show('M HIGHWAY','Ready for another run?','START GAME')}else show('M HIGHWAY','Pass traffic for points. Only skilled close cuts show green bonuses.','START GAME');menu.classList.add('hidden')};function steer(d){
   if(state!=='play')return;
   const next=Math.max(0,Math.min(2,lane+d));
   if(next===lane)return;
-  const playerY=H*.76, oldLane=lane;
+  const playerY=H*.65, oldLane=lane;
   // Capture lane changes near approaching traffic, including the time needed
   // for a two-step, three-lane maneuver.
   for(const c of cars){
@@ -78,39 +78,55 @@ function update(dt){
   offset+=speed*dt*2.6;
   px+=(center(lane)-px)*Math.min(1,dt*15);
   spawn-=dt;
-  // New police units join the pursuit periodically. Active units have a
-  // cap so the screen stays readable, and every pursuit can be escaped.
+  // Pursuits are intermittent: meaningful calm periods after an escape.
+  patrolCooldown=Math.max(0,patrolCooldown-dt);
   nextCop-=dt;
-  if(nextCop<=0){
-    if(cops.filter(c=>c.state==='chase').length<Math.min(3,1+Math.floor(score/2400))){
-      const id=++copId;
-      cops.push({id,lane:lane,x:center(lane),target:lane,y:H+85,
-        gap:Math.max(55,Math.min(85,H*.18)),reaction:.8,stagger:0,state:'chase',life:0});
-    }
-    nextCop=Math.max(7,12-Math.floor(score/1700)*.7)+Math.random()*4;
+  const activeCops=cops.filter(c=>c.state==='chase').length;
+  if(nextCop<=0 && patrolCooldown<=0){
+    if(activeCops===0){
+      cops.push({id:++copId,lane,x:center(lane),target:lane,y:H+60,
+        gap:Math.max(80,H*.23),reaction:1.1,stagger:0,state:'chase',life:0,
+        blockedTime:0,turnDelay:0});
+      nextCop=14+Math.random()*9;
+    }else if(activeCops<Math.min(3,1+Math.floor(score/3500)) && Math.random()<.42){
+      cops.push({id:++copId,lane,x:center(lane),target:lane,y:H+65,
+        gap:Math.max(110,H*.30),reaction:1.4,stagger:0,state:'chase',life:0,
+        blockedTime:0,turnDelay:0});
+      nextCop=17+Math.random()*10;
+    }else nextCop=8+Math.random()*7;
   }
   const playerY=H*.65;
   const laneW=(roadR-roadL)/3;
   const carH=Math.min(laneW*.51,58)*1.65;
-  // Police stay behind the player, visually closing in when driving in a
-  // straight line. Tight cuts build a gap; a large gap loses the pursuer.
+  // Police steer smoothly, cannot jump lanes and get stuck behind traffic.
   for(const cop of cops){
     cop.life+=dt;
-    if(cop.state==='lost'){cop.y+=dt*185;continue}
+    if(cop.state==='lost'){cop.y+=dt*160;continue}
     cop.reaction=Math.max(0,cop.reaction-dt);
     cop.stagger=Math.max(0,cop.stagger-dt);
-    if(cop.reaction===0){
-      cop.lane=cop.target;
-      cop.reaction=.3;
+    const blocked=cars.some(c=>c.lane===cop.lane &&
+      c.y>playerY+cop.gap-115 && c.y<playerY+cop.gap+28);
+    if(blocked){
+      cop.blockedTime+=dt;
+      cop.gap+=dt*42;
+      cop.reaction=Math.max(cop.reaction,.55);
+    }else{
+      cop.blockedTime=Math.max(0,cop.blockedTime-dt*.4);
+      cop.gap-=dt*(cop.stagger>0?2:7+Math.min(5,score/1700));
     }
-    cop.x+=(center(cop.lane)-cop.x)*Math.min(1,dt*4.8);
-    cop.gap-=dt*(cop.stagger>0?1.5:10+Math.min(7,score/1100));
-    // Never create an unavoidable police collision or game-over state.
-    cop.gap=Math.max(52,cop.gap);
-    cop.y=Math.min(H-24,playerY+cop.gap);
-    if(cop.gap>H*.85+110){
+    if(cop.reaction<=0 && cop.lane!==cop.target){
+      const desired=cop.lane+Math.sign(cop.target-cop.lane);
+      const occupied=cars.some(c=>c.lane===desired && Math.abs(c.y-(playerY+cop.gap))<110);
+      if(!occupied){cop.lane=desired;cop.reaction=.6+Math.random()*.25}
+      else {cop.gap+=dt*34;cop.reaction=.35}
+    }
+    cop.x+=(center(cop.lane)-cop.x)*Math.min(1,dt*3.0);
+    cop.gap=Math.max(70,cop.gap);
+    cop.y=Math.min(H+110,playerY+cop.gap);
+    if(cop.gap>H*.75+120 || cop.blockedTime>3.1){
       cop.state='lost';escapedCops++;
-      popups.push({x:Math.min(W-90,px+26),y:playerY-62,life:1.3,pts:'ESCAPED',color:'#72c5e8'});
+      patrolCooldown=Math.max(patrolCooldown,13+Math.random()*11);
+      nextCop=Math.max(nextCop,patrolCooldown);
     }
   }
   cops=cops.filter(c=>c.state==='chase'||c.y<H+120);
@@ -142,7 +158,7 @@ function update(dt){
     // so they don't unpredictably overlap or close off the safe lane.
     const paceOptions=[0.78,0.88,1.00,1.12,1.22];
     const pace=paceOptions[Math.floor(Math.random()*paceOptions.length)];
-    for(const n of lanes)cars.push({lane:n,y:-100,color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,awarded:false,minClearance:Infinity,moves:[]});
+    for(const n of lanes)cars.push({lane:n,y:Math.min(-100,...cars.filter(c=>c.lane===n).map(c=>c.y-carH*1.65)),color:colors[Math.floor(Math.random()*colors.length)],s:.88+Math.random()*.08,pace,actualPace:pace,awarded:false,minClearance:Infinity,moves:[]});
     openLane=free;waveCount++;
     // At higher scores traffic is denser, but gaps scale with actual
     // road speed and car size so the player has time to steer safely.
@@ -153,9 +169,26 @@ function update(dt){
     // Two-lane shifts need more room; keep the next row reachable.
     if(blocked===2 && Math.abs(free-lane)===2)spawn+=.24;
   }
+  // Smooth car-following: faster traffic brakes behind slower vehicles.
+  // Cars cannot overlap in the same lane even when spawned in separate waves.
+  const minFollowing=carH*1.45;
+  for(let n=0;n<3;n++){
+    const line=cars.filter(c=>c.lane===n).sort((a,b)=>b.y-a.y);
+    for(let i=1;i<line.length;i++){
+      const ahead=line[i-1],behind=line[i];
+      const gap=ahead.y-behind.y;
+      const desiredPace=Math.min(behind.pace,ahead.actualPace||ahead.pace);
+      const braking=gap<minFollowing+100;
+      const targetPace=braking?desiredPace:behind.pace;
+      behind.actualPace+=(targetPace-behind.actualPace)*Math.min(1,dt*(braking?3.5:1.1));
+    }
+  }
   for(const c of cars){
     const prevY=c.y;
-    c.y+=(speed+45)*dt*2.15*c.pace;
+    c.y+=(speed+45)*dt*2.15*c.actualPace;
+    const ahead=cars.filter(other=>other!==c && other.lane===c.lane && other.y>c.y)
+      .sort((a,b)=>a.y-b.y)[0];
+    if(ahead && ahead.y-c.y<minFollowing)c.y=ahead.y-minFollowing;
     const dx=Math.abs(center(c.lane)-px);
     // Actual overlapping rectangles, with a small forgiveness margin.
     const collisionX=laneW*.48;
